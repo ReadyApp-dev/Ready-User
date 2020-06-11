@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "13044943128",
+    "firebase_url": "https://readyapp-642a2.firebaseio.com",
+    "project_id": "readyapp-642a2",
+    "storage_bucket": "readyapp-642a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13044943128:android:0b6d2fabcd8ce27040f66d",
+        "android_client_info": {
+          "package_name": "com.shashwat.readyuser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "13044943128-369lk2bb668ks7ramfe79u4cq2a0elch.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0AwHxuQ0FEkih10uauYP6xKPb0MP8T5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "13044943128-369lk2bb668ks7ramfe79u4cq2a0elch.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
