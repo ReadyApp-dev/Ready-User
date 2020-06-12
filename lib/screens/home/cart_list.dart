@@ -44,9 +44,10 @@ class _CartWidgetState extends State<CartWidget> {
                   "Pay",
                   style: TextStyle(color: Colors.white),
                 ),
-                onPressed: (){
+                onPressed: () async {
                   print("yess");
                   Navigator.pop(context);
+                  //Navigator.pop(context);
                   print("noo");
                 },
               )
