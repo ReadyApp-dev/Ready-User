@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 5.0),
           child: CartWidget(),
         );
-      });
+      },);
     }
 
 
