@@ -13,13 +13,15 @@ class DatabaseService {
   final CollectionReference brewCollection = Firestore.instance.collection('users');
   final CollectionReference vendorCollection = Firestore.instance.collection('vendors');
 
-  Future<void> updateUserData(String email, String name, String addr1, String addr2, String phoneNo) async {
+  Future<void> updateUserData(String email,String sugar, String name, int strength, String addr1, String addr2, String phoneNo) async {
     return await brewCollection.document(uid).setData({
       'name': name,
       'email': email,
       'address1': addr1,
       'address2': addr2,
       'phone': phoneNo,
+      'sugars': sugar,
+      'strength': strength,
     });
   }
 
@@ -39,11 +41,14 @@ class DatabaseService {
 
   // user data from snapshots
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    print(uid);
+    print(snapshot.documentID);
+    print(snapshot.data);
     return UserData(
         uid: uid,
         name: snapshot.data['name'],
         sugars: snapshot.data['sugars'],
-        strength: snapshot.data['strength']
+        strength: int.parse(snapshot.data['strength'])
     );
   }
 

@@ -13,6 +13,15 @@ class UserData {
   final String sugars;
   final int strength;
 
-  UserData({ this.uid, this.sugars, this.strength, this.name });
+  UserData({ this.uid, this.name, this.sugars, this.strength });
+
+  factory UserData.initialData() {
+    return UserData(
+      uid: '',
+      name: '',
+      sugars: '',
+      strength: 0,
+    );
+  }
 
 }

@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:readyuser/models/user.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
 import 'package:readyuser/shared/loading.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SettingsForm extends StatefulWidget {
   @override
@@ -74,17 +74,16 @@ class _SettingsFormState extends State<SettingsForm> {
                         'Update',
                         style: TextStyle(color: Colors.white),
                       ),
-                      onPressed: () async {
-                        if(_formKey.currentState.validate()){
-                          await DatabaseService(uid: user.uid).updateUserData(
-                              //_currentSugars ?? snapshot.data.sugars,
-                              //_currentName ?? snapshot.data.name,
-                              //_currentStrength ?? snapshot.data.strength
-                            '','','','',''
-                          );
-                          Navigator.pop(context);
-                        }
-                      }
+//                      onPressed: () async {
+//                        if(_formKey.currentState.validate()){
+//                          await DatabaseService(uid: user.uid).updateUserData(
+//                              _currentSugars ?? snapshot.data.sugars,
+//                              _currentName ?? snapshot.data.name,
+//                              _currentStrength ?? snapshot.data.strength
+//                          );
+//                          Navigator.pop(context);
+//                        }
+//                      }
                   ),
                 ],
               ),
