@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:readyuser/models/item.dart';
 import 'package:readyuser/models/vendor.dart';
 import 'package:readyuser/models/user.dart';
+import 'package:readyuser/shared/constants.dart';
 
 class DatabaseService {
 
@@ -45,6 +47,17 @@ class DatabaseService {
     );
   }
 
+  // brew list from snapshot
+  List<Item> _itemListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc){
+      //print(doc.documentID);
+      return Item(
+        name: doc.data['name'] ?? '',
+        id: doc.documentID,
+      );
+    }).toList();
+  }
+
   // get brews stream
   Stream<List<Vendor>> get vendors {
     //print(vendorCollection.getDocuments());
@@ -58,4 +71,12 @@ class DatabaseService {
         .map(_userDataFromSnapshot);
   }
 
+  // get brews stream
+  Stream<List<Item>> get items {
+    //print(vendorCollection.getDocuments());
+    return vendorCollection.document(currentVendor).collection('menu').snapshots()
+        .map(_itemListFromSnapshot);
+  }
+
+  
 }
