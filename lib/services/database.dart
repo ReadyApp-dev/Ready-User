@@ -10,18 +10,29 @@ class DatabaseService {
   DatabaseService({ this.uid });
 
   // collection reference
-  final CollectionReference brewCollection = Firestore.instance.collection('users');
+  final CollectionReference userCollection = Firestore.instance.collection('users');
   final CollectionReference vendorCollection = Firestore.instance.collection('vendors');
+  
+  
+  Future<void> updateUserData(UserData userData) async {
+    return await userCollection.document(uid).setData({
+      'name': userData.name,
+      'email': userData.email,
+      'address1': userData.addr1,
+      'address2': userData.addr2,
+      'phone': userData.phoneNo,
+      'cartVendor': userData.cartVendor,
+      'cartVal': userData.cartVal,
+    });
+  }
 
-  Future<void> updateUserData(String email,String sugar, String name, int strength, String addr1, String addr2, String phoneNo) async {
-    return await brewCollection.document(uid).setData({
-      'name': name,
-      'email': email,
-      'address1': addr1,
-      'address2': addr2,
-      'phone': phoneNo,
-      'sugars': sugar,
-      'strength': strength,
+  Future<void> addItemToCart(Item item) async {
+    print(item);
+    print(uid);
+    return await userCollection.document(uid).collection('cart').document(item.id).setData({
+      'name': item.name,
+      'cost': item.cost,
+      'quantity': item.quantity,
     });
   }
 
@@ -41,14 +52,15 @@ class DatabaseService {
 
   // user data from snapshots
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    print(uid);
-    print(snapshot.documentID);
-    print(snapshot.data);
     return UserData(
-        uid: uid,
-        name: snapshot.data['name'],
-        sugars: snapshot.data['sugars'],
-        strength: int.parse(snapshot.data['strength'])
+      uid: uid,
+      name: snapshot.data['name'],
+      email: snapshot.data['email'],
+      addr1: snapshot.data['addr1'],
+      addr2: snapshot.data['addr2'],
+      phoneNo: snapshot.data['phone'],
+      cartVendor: snapshot.data['cartVendor'],
+      cartVal: snapshot.data['cartVal'],
     );
   }
 
@@ -59,8 +71,18 @@ class DatabaseService {
       return Item(
         name: doc.data['name'] ?? '',
         id: doc.documentID,
+        cost: doc.data['cost'] ?? 0.0,
+        quantity: doc.data['quantity'] ?? 0,
       );
     }).toList();
+  }
+
+
+  // brew list from snapshot
+  Future<void> _deleteAll(QuerySnapshot snapshot) async {
+    for (DocumentSnapshot doc in snapshot.documents) {
+      doc.reference.delete();
+    }
   }
 
   // get brews stream
@@ -72,7 +94,7 @@ class DatabaseService {
 
   // get user doc stream
   Stream<UserData> get userData {
-    return brewCollection.document(uid).snapshots()
+    return userCollection.document(uid).snapshots()
         .map(_userDataFromSnapshot);
   }
 
@@ -80,6 +102,13 @@ class DatabaseService {
   Stream<List<Item>> get items {
     //print(vendorCollection.getDocuments());
     return vendorCollection.document(currentVendor).collection('menu').snapshots()
+        .map(_itemListFromSnapshot);
+  }
+
+  // get brews stream
+  Stream<List<Item>> get cart {
+    //print(vendorCollection.getDocuments());
+    return userCollection.document(uid).collection('cart').snapshots()
         .map(_itemListFromSnapshot);
   }
 

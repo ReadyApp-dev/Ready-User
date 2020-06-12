@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readyuser/models/item.dart';
+import 'package:readyuser/models/user.dart';
 import 'package:readyuser/models/vendor.dart';
 import 'package:readyuser/screens/home/item_list.dart';
 import 'package:readyuser/screens/home/vendor_list.dart';
 import 'package:readyuser/screens/home/setting_form.dart';
 import 'package:readyuser/services/auth.dart';
 import 'package:readyuser/services/database.dart';
+import 'package:readyuser/shared/constants.dart';
 
 //import 'vendor_list.dart';
 
@@ -19,13 +21,18 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
   bool showVendors = true;
+
+
   @override
   Widget build(BuildContext context) {
 
+
+    User user = Provider.of<User>(context);
+    userUid = user.uid;
     void _showSettingsPanel() {
       showModalBottomSheet(context: context, builder: (context) {
         return Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 5.0),
           child: SettingsForm(),
         );
       });
@@ -65,7 +72,7 @@ class _HomeState extends State<Home> {
         child: Scaffold(
           backgroundColor: Colors.brown[50],
           appBar: AppBar(
-            title: Text('Brew Crew'),
+            title: Text('Ready'),
             backgroundColor: Colors.brown[400],
             elevation: 0.0,
             actions: <Widget>[
@@ -126,12 +133,7 @@ class _HomeState extends State<Home> {
           body: Container(
             color: Colors.brown[100],
             child:ItemList(
-              selectItem: (){
-                setState(() {
-                  print("yes it works too");
-                  showVendors = false;
-                });
-              },
+
             ),
           ),
         ),

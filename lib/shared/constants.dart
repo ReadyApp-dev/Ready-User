@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:readyuser/models/item.dart';
 
 String currentVendor = "";
+String userUid = "";
+List<Item> myCart = [];
 
 const textInputDecoration = InputDecoration(
   fillColor: Colors.white,

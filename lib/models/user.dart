@@ -8,19 +8,27 @@ class User {
 
 class UserData {
 
-  final String uid;
-  final String name;
-  final String sugars;
-  final int strength;
+  String uid;
+  String email;
+  String name;
+  String addr1;
+  String addr2;
+  String phoneNo;
+  String cartVendor;
+  double cartVal;
 
-  UserData({ this.uid, this.name, this.sugars, this.strength });
+  UserData({ this.uid, this.email, this.name, this.addr1, this.addr2, this.phoneNo, this.cartVendor, this.cartVal });
 
   factory UserData.initialData() {
     return UserData(
       uid: '',
+      email: '',
       name: '',
-      sugars: '',
-      strength: 0,
+      addr1: '',
+      addr2: '',
+      phoneNo: '',
+      cartVendor: '',
+      cartVal: 0.0,
     );
   }
 

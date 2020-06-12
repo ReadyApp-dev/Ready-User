@@ -7,8 +7,6 @@ import 'package:readyuser/screens/home/vendor_tile.dart';
 
 class ItemList extends StatefulWidget {
 
-  final Function selectItem;
-  ItemList({ this.selectItem });
 
   @override
   _ItemListState createState() => _ItemListState();
@@ -24,7 +22,7 @@ class _ItemListState extends State<ItemList> {
       itemBuilder: (context, index) {
         return ItemTile(
           item: items[index],
-          selectItem: widget.selectItem,
+
         );
       },
     );

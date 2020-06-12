@@ -1,4 +1,6 @@
+import 'package:readyuser/models/item.dart';
 import 'package:readyuser/models/user.dart';
+import 'package:readyuser/screens/home/item_tile.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
 import 'package:readyuser/shared/loading.dart';
@@ -26,11 +28,27 @@ class _SettingsFormState extends State<SettingsForm> {
 
     User user = Provider.of<User>(context);
 
-    return StreamBuilder<UserData>(
-        stream: DatabaseService(uid: user.uid).userData,
+    return StreamBuilder<List<Item>>(
+        stream: DatabaseService(uid: user.uid).cart,
         builder: (context, snapshot) {
-          if(snapshot.hasData){
-            UserData userData = snapshot.data;
+          List<Item> data = snapshot.data;
+          myCart = data;
+          if (data == null) return Loading();
+          return ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              return ItemTile(
+                item: data[index],
+
+              );
+            },
+          );
+        }
+    );
+  }
+}
+            /*
+
             return Form(
               key: _formKey,
               child: Column(
@@ -93,5 +111,5 @@ class _SettingsFormState extends State<SettingsForm> {
           }
         }
     );
-  }
-}
+
+             */
