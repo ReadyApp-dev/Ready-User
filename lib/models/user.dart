@@ -1,13 +1,10 @@
 class User {
-
   final String uid;
 
   User({ this.uid });
-
 }
 
 class UserData {
-
   String uid;
   String email;
   String name;
@@ -31,5 +28,4 @@ class UserData {
       cartVal: 0.0,
     );
   }
-
 }

@@ -1,14 +1,11 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readyuser/models/item.dart';
 import 'package:readyuser/models/user.dart';
-import 'package:readyuser/models/vendor.dart';
 import 'package:readyuser/shared/constants.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:flutter_counter/flutter_counter.dart';
-
 
 class ItemTile extends StatefulWidget {
   final Item item;
@@ -20,10 +17,8 @@ class ItemTile extends StatefulWidget {
 
 class _ItemTileState extends State<ItemTile> {
 
-
   num _defaultValue = 0;
   num _counter = 0;
-
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +54,6 @@ class _ItemTileState extends State<ItemTile> {
               decimalPlaces: 0,
               onChanged: (value) {
                 // get the latest value from here
-                //currentVendor =
                 if(myCart == null){
                   widget.item.quantity = 1;
                   myCart.add(widget.item);
@@ -76,7 +70,6 @@ class _ItemTileState extends State<ItemTile> {
                 setState(() {
                   _defaultValue = value;
                   _counter = value;
-
                 });
               },
             ),

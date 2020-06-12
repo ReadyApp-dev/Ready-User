@@ -5,7 +5,7 @@ import 'package:readyuser/models/user.dart';
 import 'package:readyuser/models/vendor.dart';
 import 'package:readyuser/screens/home/item_list.dart';
 import 'package:readyuser/screens/home/vendor_list.dart';
-import 'package:readyuser/screens/home/setting_form.dart';
+import 'package:readyuser/screens/home/cart_list.dart';
 import 'package:readyuser/services/auth.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
@@ -29,11 +29,12 @@ class _HomeState extends State<Home> {
 
     User user = Provider.of<User>(context);
     userUid = user.uid;
+    DatabaseService(uid: userUid).userDetails();
     void _showSettingsPanel() {
       showModalBottomSheet(context: context, builder: (context) {
         return Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 5.0),
-          child: SettingsForm(),
+          child: CartWidget(),
         );
       });
     }

@@ -56,8 +56,8 @@ class DatabaseService {
       uid: uid,
       name: snapshot.data['name'],
       email: snapshot.data['email'],
-      addr1: snapshot.data['addr1'],
-      addr2: snapshot.data['addr2'],
+      addr1: snapshot.data['address1'],
+      addr2: snapshot.data['address2'],
       phoneNo: snapshot.data['phone'],
       cartVendor: snapshot.data['cartVendor'],
       cartVal: snapshot.data['cartVal'],
@@ -97,6 +97,25 @@ class DatabaseService {
     return userCollection.document(uid).snapshots()
         .map(_userDataFromSnapshot);
   }
+
+  Future<void> userDetails() async{
+    return await userCollection.document(uid).get().then((value) {
+      UserData userData =  UserData(
+        uid: uid,
+        name: value.data['name'],
+        email: value.data['email'],
+        addr1: value.data['address1'],
+        addr2: value.data['address2'],
+        phoneNo: value.data['phone'],
+        cartVendor: value.data['cartVendor'],
+        cartVal: value.data['cartVal'],
+      );
+      //return userData;
+    });
+
+  }
+
+
 
   // get brews stream
   Stream<List<Item>> get items {

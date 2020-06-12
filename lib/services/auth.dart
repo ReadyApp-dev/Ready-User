@@ -9,6 +9,7 @@ class AuthService {
 
   // create user obj based on firebase user
   User _userFromFirebaseUser(FirebaseUser user) {
+    userUid = user.uid;
     return user != null ? User(uid: user.uid) : null;
   }
 
@@ -25,6 +26,7 @@ class AuthService {
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
       userUid = user.uid;
+      //UserData userData = await DatabaseService(uid: user.uid).userDetails();
       return user;
     } catch (error) {
       print(error.toString());
