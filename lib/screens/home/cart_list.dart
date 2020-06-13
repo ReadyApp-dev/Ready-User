@@ -14,16 +14,24 @@ class CartWidget extends StatefulWidget {
 }
 
 class _CartWidgetState extends State<CartWidget> {
+
   @override
   Widget build(BuildContext context) {
+    double sum = 0.0;
     User user = Provider.of<User>(context);
     print(user);
     return StreamBuilder<List<Item>>(
         stream: DatabaseService(uid: user.uid).cart,
         builder: (context, snapshot) {
           List<Item> data = snapshot.data;
-          myCart = data;
+
           if (data == null) return Loading();
+          myCart = data;
+          print(myCart);
+          sum = 0.0;
+          myCart.forEach((element) {sum += element.cost*element.quantity;});
+          userCartVal = sum;
+          print(sum);
           return Column(
             children: <Widget>[
               Expanded(
@@ -39,19 +47,24 @@ class _CartWidgetState extends State<CartWidget> {
                 ),
               ),
               SizedBox(height: 10.0),
-              RaisedButton(
-                color: Colors.pink[400],
-                child: Text(
-                  "Pay",
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () async {
-                  print("yess");
-                  Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentPage()));
-                  //Navigator.pop(context);
-                  print("noo");
-                },
+              Row(
+                children: <Widget>[
+
+                  RaisedButton(
+                    color: Colors.pink[400],
+                    child: Text(
+                      "Pay",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () async {
+                      print("yess");
+                      Navigator.pop(context);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentPage()));
+                      //Navigator.pop(context);
+                      print("noo");
+                    },
+                  ),
+                ],
               )
             ],
           );

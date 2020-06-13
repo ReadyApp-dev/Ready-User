@@ -38,24 +38,6 @@ class DatabaseService {
     }).toList();
   }
 
-  /*
-  // user data from snapshots
-  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    return UserData(
-      uid: uid,
-      name: snapshot.data['name'],
-      email: snapshot.data['email'],
-      addr1: snapshot.data['address1'],
-      addr2: snapshot.data['address2'],
-      phoneNo: snapshot.data['phone'],
-      cartVendor: snapshot.data['cartVendor'],
-      cartVal: snapshot.data['cartVal'],
-    );
-  }
-
-   */
-
-
   Future<void> userDetails() async{
     return await userCollection.document(uid).get().then((value) {
 
@@ -96,9 +78,8 @@ class DatabaseService {
     }).toList();
   }
 
-
   Future<void> clearCart() async{
-    userCollection.document(uid).collection('cart').getDocuments().then((snapshot) {
+    await userCollection.document(uid).collection('cart').getDocuments().then((snapshot) {
       for (DocumentSnapshot ds in snapshot.documents) {
         ds.reference.delete();
       }
@@ -120,13 +101,6 @@ class DatabaseService {
         .map(_vendorListFromSnapshot);
   }
 
-/*
-  // get user doc stream
-  Stream<UserData> get userData {
-    return userCollection.document(uid).snapshots()
-        .map(_userDataFromSnapshot);
-  }
-*/
   // get menu items stream
   Stream<List<Item>> get items {
     //print(vendorCollection.getDocuments());

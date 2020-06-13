@@ -22,7 +22,13 @@ class _ItemTileState extends State<ItemTile> {
 
   @override
   Widget build(BuildContext context) {
-    User user = Provider.of<User>(context);
+    int index;
+    double sum = 0.0;
+    if(myCart != null){
+      index = myCart.indexWhere((element) => element.id == widget.item.id);
+    }
+    if(index != -1)
+      widget.item.quantity = myCart[index].quantity;
     _defaultValue = widget.item.quantity;
     _counter = widget.item.quantity;
     return Padding(
@@ -37,15 +43,7 @@ class _ItemTileState extends State<ItemTile> {
             ),
             title: Text(widget.item.name),
             subtitle: Text(' ${widget.item.id} '),
-          /*
-          onTap: () {
-              print(widget.item);
-              widget.item.quantity = 1;
-              DatabaseService(uid: userUid).addItemToCart(widget.item);
-              widget.selectItem();
-            },
 
-           */
             trailing: Counter(
               initialValue: _defaultValue,
               minValue: 0,
@@ -71,11 +69,11 @@ class _ItemTileState extends State<ItemTile> {
                             child: new Text('No'),
                           ),
                           new FlatButton(
-                            onPressed: () {
-                              DatabaseService(uid: userUid).clearCart();
+                            onPressed: () async {
+                              await DatabaseService(uid: userUid).clearCart();
                               myCart = [];
-                              Navigator.of(context).pop(true);
                               yesPressed = true;
+                              Navigator.of(context).pop(true);
                             },
                             child: new Text('Yes'),
                           ),
@@ -84,27 +82,33 @@ class _ItemTileState extends State<ItemTile> {
                     );
                   }
                 if(yesPressed){
+
                   if (myCart.isEmpty) {
                     userCartVendor = currentVendor;
-                    UserData userData = new UserData(uid: userUid,name: userName,email: userEmail,addr1: userAddr1,addr2: userAddr2,phoneNo: userPhoneNo,cartVendor: userCartVendor,cartVal: userCartVal);
-                    DatabaseService(uid: userUid).updateUserData(userData);
                     widget.item.quantity = 1;
+                    userCartVal = widget.item.cost;
                     myCart.add(widget.item);
                   }
                   int index = myCart.indexWhere((element) =>
                   element.id == widget.item.id);
                   if (index == -1) {
                     widget.item.quantity = 1;
+                    userCartVal += widget.item.cost;
                     myCart.add(widget.item);
                   } else {
+                    userCartVal -= widget.item.cost*widget.item.quantity;
+                    userCartVal += widget.item.cost*value;
                     myCart[index].quantity = value;
                     widget.item.quantity = value;
                   }
+                  UserData userData = new UserData(uid: userUid,name: userName,email: userEmail,addr1: userAddr1,addr2: userAddr2,phoneNo: userPhoneNo,cartVendor: userCartVendor,cartVal: userCartVal);
+                  DatabaseService(uid: userUid).updateUserData(userData);
                   DatabaseService(uid: userUid).addItemToCart(widget.item);
                   setState(() {
                     _defaultValue = value;
                     _counter = value;
                   });
+                  print(myCart);
                 }
               },
             ),
