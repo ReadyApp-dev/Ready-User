@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:upi_india/upi_india.dart';
 
 
-class HomePage extends StatefulWidget {
+class PaymentPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _PaymentPageState createState() => _PaymentPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _PaymentPageState extends State<PaymentPage> {
   Future<UpiResponse> _transaction;
   UpiIndia _upiIndia = UpiIndia();
   List<UpiApp> apps;
@@ -25,11 +25,11 @@ class _HomePageState extends State<HomePage> {
   Future<UpiResponse> initiateTransaction(String app) async {
     return _upiIndia.startTransaction(
       app: app,
-      receiverUpiId: '9078600498@ybl',
-      receiverName: 'Md Azharuddin',
+      receiverUpiId: '9455851989@ybl',
+      receiverName: 'Shashwat Pandey',
       transactionRefId: 'TestingUpiIndiaPlugin',
       transactionNote: 'Not actual. Just an example.',
-      amount: 1.00,
+      amount: 5.00,
     );
   }
 
@@ -69,11 +69,21 @@ class _HomePageState extends State<HomePage> {
       );
   }
 
+  Future<void> _removeLoading() async {
+    await Future.delayed(Duration(seconds: 10));
+    setState(() {
+      Navigator.pop(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('UPI'),
+        backgroundColor: Colors.brown[400],
+        elevation: 0.0,
+        automaticallyImplyLeading: false,
+        title: Text('Payment'),
       ),
       body: Column(
         children: <Widget>[
@@ -85,6 +95,7 @@ class _HomePageState extends State<HomePage> {
               builder: (BuildContext context,
                   AsyncSnapshot<UpiResponse> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
+                  _removeLoading();
                   if (snapshot.hasError) {
                     return Center(child: Text('An Unknown error has occured'));
                   }
