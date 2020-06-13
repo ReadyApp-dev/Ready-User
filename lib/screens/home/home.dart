@@ -30,6 +30,7 @@ class _HomeState extends State<Home> {
     User user = Provider.of<User>(context);
     userUid = user.uid;
     DatabaseService(uid: userUid).userDetails();
+
     void _showSettingsPanel() {
       showModalBottomSheet(context: context, builder: (context) {
         return Container(
@@ -113,7 +114,7 @@ class _HomeState extends State<Home> {
         child: Scaffold(
           backgroundColor: Colors.brown[50],
           appBar: AppBar(
-            title: Text('Brew Crew'),
+            title: Text('Ready'),
             backgroundColor: Colors.brown[400],
             elevation: 0.0,
             actions: <Widget>[

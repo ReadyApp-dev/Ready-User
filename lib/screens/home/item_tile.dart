@@ -52,25 +52,60 @@ class _ItemTileState extends State<ItemTile> {
               maxValue: 10,
               step: 1,
               decimalPlaces: 0,
-              onChanged: (value) {
+              onChanged: (value) async {
                 // get the latest value from here
-                if(myCart == null){
-                  widget.item.quantity = 1;
-                  myCart.add(widget.item);
+                bool yesPressed = true;
+                if(currentVendor != userCartVendor){
+                  await showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => new AlertDialog(
+                        title: new Text('Are you sure?'),
+                        content: new Text('There are items in your cart from another vendor. Replace them?'),
+                        actions: <Widget>[
+                          new FlatButton(
+                            onPressed: (){
+                              Navigator.of(context).pop(false);
+                              yesPressed = false;
+                            },
+                            child: new Text('No'),
+                          ),
+                          new FlatButton(
+                            onPressed: () {
+                              DatabaseService(uid: userUid).clearCart();
+                              myCart = [];
+                              Navigator.of(context).pop(true);
+                              yesPressed = true;
+                            },
+                            child: new Text('Yes'),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                if(yesPressed){
+                  if (myCart.isEmpty) {
+                    userCartVendor = currentVendor;
+                    UserData userData = new UserData(uid: userUid,name: userName,email: userEmail,addr1: userAddr1,addr2: userAddr2,phoneNo: userPhoneNo,cartVendor: userCartVendor,cartVal: userCartVal);
+                    DatabaseService(uid: userUid).updateUserData(userData);
+                    widget.item.quantity = 1;
+                    myCart.add(widget.item);
+                  }
+                  int index = myCart.indexWhere((element) =>
+                  element.id == widget.item.id);
+                  if (index == -1) {
+                    widget.item.quantity = 1;
+                    myCart.add(widget.item);
+                  } else {
+                    myCart[index].quantity = value;
+                    widget.item.quantity = value;
+                  }
+                  DatabaseService(uid: userUid).addItemToCart(widget.item);
+                  setState(() {
+                    _defaultValue = value;
+                    _counter = value;
+                  });
                 }
-                int index = myCart.indexWhere((element) => element.id == widget.item.id);
-                if(index == -1){
-                  widget.item.quantity = 1;
-                  myCart.add(widget.item);
-                }else{
-                  myCart[index].quantity = value;
-                  widget.item.quantity = value;
-                }
-                DatabaseService(uid: userUid).addItemToCart(widget.item);
-                setState(() {
-                  _defaultValue = value;
-                  _counter = value;
-                });
               },
             ),
         ),
