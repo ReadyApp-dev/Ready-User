@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:readyuser/models/item.dart';
 import 'package:readyuser/models/user.dart';
 import 'package:readyuser/models/vendor.dart';
+import 'package:readyuser/screens/home/drawer_list.dart';
 import 'package:readyuser/screens/home/item_list.dart';
 import 'package:readyuser/screens/home/vendor_list.dart';
 import 'package:readyuser/screens/home/cart_list.dart';
@@ -10,22 +11,18 @@ import 'package:readyuser/services/auth.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
 
-//import 'vendor_list.dart';
-
 class Home extends StatefulWidget {
-
+  bool showVendors = true;
+  num drawerItemSelected = 1;
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
-  bool showVendors = true;
-
 
   @override
   Widget build(BuildContext context) {
-
 
     User user = Provider.of<User>(context);
     userUid = user.uid;
@@ -40,11 +37,10 @@ class _HomeState extends State<Home> {
       },);
     }
 
-
     Future<bool> _onWillPop() async {
-      if(showVendors == false){
+      if(widget.showVendors == false){
         setState(() {
-          showVendors = true;
+          widget.showVendors = true;
         });
         return false;
       }else{(await showDialog(
@@ -66,81 +62,59 @@ class _HomeState extends State<Home> {
       )) ?? false;
       }
     }
-
-    return new WillPopScope(
-      onWillPop: _onWillPop,
-      child: showVendors ? StreamProvider<List<Vendor>>.value(
-        value: DatabaseService().vendors,
-        child: Scaffold(
-          backgroundColor: Colors.brown[50],
-          appBar: AppBar(
-            title: Text('Ready'),
-            backgroundColor: Colors.brown[400],
-            elevation: 0.0,
-            actions: <Widget>[
-              FlatButton.icon(
-                icon: Icon(Icons.person),
-                label: Text('logout'),
-                onPressed: () async {
-                  await _auth.signOut();
-                },
+    switch(widget.drawerItemSelected){
+      case 1: {
+        return new WillPopScope(
+            onWillPop: _onWillPop,
+            child:  Scaffold(
+              drawer: Drawer(
+                child: DrawerList((int i){
+                  print(i);
+                }),
               ),
-              FlatButton.icon(
-                icon: Icon(Icons.settings),
-                label: Text('settings'),
-                onPressed: () => _showSettingsPanel(),
-              )
-            ],
-          ),
-          body: Container(
-            color: Colors.brown[100],
-            child:VendorList(
-              selectVendor: (){
-                setState(() {
-                  print("yes it works");
-                  showVendors = false;
-                });
-              },
-            ),
-          ),
-        ),
-      ):
+                backgroundColor: Colors.brown[50],
+                appBar: AppBar(
+                  title: Text('Ready'),
+                  backgroundColor: Colors.brown[400],
+                  elevation: 0.0,
+                  actions: <Widget>[
+                    FlatButton.icon(
+                      icon: Icon(Icons.person),
+                      label: Text('logout'),
+                      onPressed: () async {
+                        await _auth.signOut();
+                      },
+                    ),
+                    FlatButton.icon(
+                      icon: Icon(Icons.settings),
+                      label: Text('settings'),
+                      onPressed: () => _showSettingsPanel(),
+                    )
+                  ],
+                ),
+                body: Container(
+                  color: Colors.brown[100],
+                  child: widget.showVendors? StreamProvider<List<Vendor>>.value(
+                    value: DatabaseService().vendors,
+                    child:VendorList(
+                      selectVendor: (){
+                        setState(() {
+                          print("yes it works");
+                          widget.showVendors = false;
+                        });
+                      },
+                    ),
+                  ):StreamProvider<List<Item>>.value(
+                    value: DatabaseService().items,
+                    child:ItemList(),
+                  ),
+                )
+            )
+        );
+      }
+
+    }
 
 
-
-
-      StreamProvider<List<Item>>.value(
-        value: DatabaseService().items,
-        child: Scaffold(
-          backgroundColor: Colors.brown[50],
-          appBar: AppBar(
-            title: Text('Ready'),
-            backgroundColor: Colors.brown[400],
-            elevation: 0.0,
-            actions: <Widget>[
-              FlatButton.icon(
-                icon: Icon(Icons.person),
-                label: Text('logout'),
-                onPressed: () async {
-                  await _auth.signOut();
-                },
-              ),
-              FlatButton.icon(
-                icon: Icon(Icons.settings),
-                label: Text('settings'),
-                onPressed: () => _showSettingsPanel(),
-              )
-            ],
-          ),
-          body: Container(
-            color: Colors.brown[100],
-            child:ItemList(
-
-            ),
-          ),
-        ),
-      ),
-    );
   }
-
 }
