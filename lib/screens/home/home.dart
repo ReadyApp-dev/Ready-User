@@ -86,8 +86,8 @@ class _HomeState extends State<Home> {
                       },
                     ),
                     FlatButton.icon(
-                      icon: Icon(Icons.settings),
-                      label: Text('settings'),
+                      icon: Icon(Icons.shopping_cart),
+                      label: Text('cart'),
                       onPressed: () => _showSettingsPanel(),
                     )
                   ],

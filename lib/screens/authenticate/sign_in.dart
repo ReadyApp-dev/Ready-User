@@ -30,7 +30,7 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text('Sign in to Brew Crew'),
+        title: Text('Sign in to Ready'),
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),
