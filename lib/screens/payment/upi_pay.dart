@@ -99,31 +99,15 @@ class _PaymentPageState extends State<PaymentPage> {
               builder: (BuildContext context,
                   AsyncSnapshot<UpiResponse> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  _removeLoading();
+                  //_removeLoading();
                   if (snapshot.hasError) {
                     return Center(child: Text('An Unknown error has occured'));
                   }
                   UpiResponse _upiResponse;
                   _upiResponse = snapshot.data;
                   if (_upiResponse.error != null) {
-                    String text = '';
-                    switch (snapshot.data.error) {
-                      case UpiError.APP_NOT_INSTALLED:
-                        text = "Requested app not installed on device";
-                        break;
-                      case UpiError.INVALID_PARAMETERS:
-                        text = "Requested app cannot handle the transaction";
-                        break;
-                      case UpiError.NULL_RESPONSE:
-                        text = "requested app didn't returned any response";
-                        break;
-                      case UpiError.USER_CANCELLED:
-                        text = "You cancelled the transaction";
-                        break;
-                    }
-                    return Center(
-                      child: Text(text),
-                    );
+                    print("object");
+
                   }
                   String txnId = _upiResponse.transactionId;
                   String resCode = _upiResponse.responseCode;
@@ -133,26 +117,45 @@ class _PaymentPageState extends State<PaymentPage> {
                   switch (status) {
                     case UpiPaymentStatus.SUCCESS:
                       print('Transaction Successful');
+                      return AlertDialog(
+                        title: new Text('Success!'),
+                        content: new Text('Order placed successfully'),
+                        actions: <Widget>[
+                          new FlatButton(
+                            onPressed: () async {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                              await DatabaseService(uid: userUid).clearCart();
+                            },
+                            child: new Text('OK'),
+                          ),
+                        ],
+                      );
                       break;
                     case UpiPaymentStatus.SUBMITTED:
                       print('Transaction Submitted');
                       break;
                     case UpiPaymentStatus.FAILURE:
                       print('Transaction Failed');
+                      return AlertDialog(
+                          title: new Text('Error!'),
+                          content: new Text('Your transaction failed'),
+                          actions: <Widget>[
+                            new FlatButton(
+                              onPressed: () async {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                await DatabaseService(uid: userUid).clearCart();
+                              },
+                              child: new Text('OK'),
+                            ),
+                          ],
+                        );
                       break;
                     default:
                       print('Received an Unknown transaction status');
                   }
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text('Transaction Id: $txnId\n'),
-                      Text('Response Code: $resCode\n'),
-                      Text('Reference Id: $txnRef\n'),
-                      Text('Status: $status\n'),
-                      Text('Approval No: $approvalRef'),
-                    ],
-                  );
+                  return Container();
                 } else
                   return Text(' ');
               },
