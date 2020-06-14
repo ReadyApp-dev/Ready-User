@@ -33,6 +33,7 @@ class _CartWidgetState extends State<CartWidget> {
           myCart.forEach((element) {sum += element.cost*element.quantity;});
           userCartVal = sum;
           print(sum);
+
           return Column(
             children: <Widget>[
               Expanded(

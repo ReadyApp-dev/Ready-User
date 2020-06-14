@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:readyuser/models/item.dart';
+import 'package:readyuser/models/order.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
 import 'package:upi_india/upi_india.dart';
@@ -114,9 +116,26 @@ class _PaymentPageState extends State<PaymentPage> {
                   String txnRef = _upiResponse.transactionRefId;
                   String status = _upiResponse.status;
                   String approvalRef = _upiResponse.approvalRefNo;
+
+
+                  Map<String, dynamic> myMap = new Map();
+                  myMap = Map.fromIterable(myCart, key: (e) => e.id, value: (e) => {'cost':e.cost,'quantity':e.quantity, 'name':e.name});
+                  print(myMap);
+                  List<Item> out = [];
+                  myMap.forEach((key, value) => out.add(new Item(id: key, cost: value['cost'], quantity: value['quantity'], name: value['name'])));
+                  print(out);
+
                   switch (status) {
                     case UpiPaymentStatus.SUCCESS:
                       print('Transaction Successful');
+                      Order order = new Order(
+                        cart:  myMap?? '',
+                        status: "Order Plaved",
+                        totalCost: userCartVal ?? '0.0',
+                        user: userUid ?? '0',
+                        vendor: userCartVendor ?? '0',
+                      );
+                      DatabaseService(uid: userUid).addOrderData(order);
                       return AlertDialog(
                         title: new Text('Success!'),
                         content: new Text('Order placed successfully'),
@@ -137,6 +156,15 @@ class _PaymentPageState extends State<PaymentPage> {
                       break;
                     case UpiPaymentStatus.FAILURE:
                       print('Transaction Failed');
+                      Order order = new Order(
+                        cart:  myMap?? '',
+                        status: "Order Failed",
+                        totalCost: userCartVal ?? '0.0',
+                        user: userUid ?? '0',
+                        vendor: userCartVendor ?? '0',
+                      );
+                      DatabaseService(uid: userUid).addOrderData(order);
+
                       return AlertDialog(
                           title: new Text('Error!'),
                           content: new Text('Your transaction failed'),

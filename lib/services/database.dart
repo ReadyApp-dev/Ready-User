@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:readyuser/models/item.dart';
+import 'package:readyuser/models/order.dart';
 import 'package:readyuser/models/vendor.dart';
 import 'package:readyuser/models/user.dart';
 import 'package:readyuser/shared/constants.dart';
@@ -90,6 +91,41 @@ class DatabaseService {
     }).toList();
   }
 
+  Future<void> addOrderData(Order order) async {
+    return await userCollection.document(uid).collection("orderHistory").add({
+      'cart': order.cart,
+      'status': order.status,
+      'totalCost': order.totalCost,
+      'user': order.user,
+      'vendor': order.vendor,
+    });
+  }
+
+  Future<void> updateOrderData(Order order) async {
+    return await userCollection.document(uid).collection("orderHistory").document(order.id).setData({
+      'cart': order.cart,
+      'status': order.status,
+      'totalCost': order.totalCost,
+      'user': order.user,
+      'vendor': order.vendor,
+    });
+  }
+
+  // brew list from snapshot
+  List<Order> _orderListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc){
+      //print(doc.documentID);
+      return Order(
+        id: doc.documentID,
+        cart: doc.data['cart'] ?? '',
+        status: doc.data['status'],
+        totalCost: doc.data['totalCost'] ?? '0.0',
+        user: doc.data['user'] ?? '0',
+        vendor: doc.data['vendor'] ?? '0',
+      );
+    }).toList();
+  }
+
   Future<void> clearCart() async{
     await userCollection.document(uid).collection('cart').getDocuments().then((snapshot) {
       for (DocumentSnapshot ds in snapshot.documents) {
@@ -131,6 +167,11 @@ class DatabaseService {
   Stream<UserData> get userData {
     return userCollection.document(uid).snapshots()
         .map(_userDataFromSnapshot);
+  }
+
+  Stream<List<Order>> get orderHistory {
+    return userCollection.document(uid).collection('orderHistory').snapshots()
+        .map(_orderListFromSnapshot);
   }
 
   
