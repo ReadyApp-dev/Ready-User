@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:readyuser/models/item.dart';
 import 'package:readyuser/models/user.dart';
 import 'package:readyuser/screens/home/cartAndMenu/item_tile.dart';
@@ -58,8 +59,9 @@ class _CartWidgetState extends State<CartWidget> {
                     ),
                     onPressed: () async {
                       print("yess");
-                      Navigator.pop(context);
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentPage()));
+                      //Navigator.pop(context);
+
+                      Navigator.push(context, CupertinoPageRoute(builder: (context) => PaymentPage()));
                       //Navigator.pop(context);
                       print("noo");
                     },

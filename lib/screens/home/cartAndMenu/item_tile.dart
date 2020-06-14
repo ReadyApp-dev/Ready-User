@@ -24,11 +24,6 @@ class _ItemTileState extends State<ItemTile> {
   Widget build(BuildContext context) {
     int index;
     double sum = 0.0;
-    if(myCart != null){
-      index = myCart.indexWhere((element) => element.id == widget.item.id);
-    }
-    if(index != -1)
-      widget.item.quantity = myCart[index].quantity;
     _defaultValue = widget.item.quantity;
     _counter = widget.item.quantity;
     return Padding(

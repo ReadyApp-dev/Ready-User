@@ -15,9 +15,6 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       child: MaterialApp(
         home: Wrapper(),
-        routes: <String, WidgetBuilder> {
-          '/screen1': (BuildContext context) => new PaymentPage(),
-        },
       ),
 
     );

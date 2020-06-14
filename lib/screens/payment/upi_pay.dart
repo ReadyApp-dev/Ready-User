@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:readyuser/services/database.dart';
+import 'package:readyuser/shared/constants.dart';
 import 'package:upi_india/upi_india.dart';
 
 
@@ -78,6 +80,8 @@ class _PaymentPageState extends State<PaymentPage> {
 
   @override
   Widget build(BuildContext context) {
+    //DatabaseService(uid: userUid).clearCart();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
