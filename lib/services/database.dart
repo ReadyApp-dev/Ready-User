@@ -53,6 +53,19 @@ class DatabaseService {
     });
   }
 
+  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    return UserData(
+      uid: uid,
+      email: snapshot.data['email'],
+      name: snapshot.data['name'],
+      addr1: snapshot.data['addr1'],
+      addr2: snapshot.data['addr2'],
+      phoneNo: snapshot.data['phoneNo'],
+      cartVendor: snapshot.data['cartVendor'],
+      cartVal: snapshot.data['cartVal'],
+    );
+  }
+
   Future<void> updateUserData(UserData userData) async {
     return await userCollection.document(uid).setData({
       'name': userData.name,
@@ -64,7 +77,6 @@ class DatabaseService {
       'cartVal': userData.cartVal,
     });
   }
-
   // brew list from snapshot
   List<Item> _itemListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc){
@@ -113,6 +125,12 @@ class DatabaseService {
     //print(vendorCollection.getDocuments());
     return userCollection.document(uid).collection('cart').snapshots()
         .map(_itemListFromSnapshot);
+  }
+
+  // get user doc stream
+  Stream<UserData> get userData {
+    return userCollection.document(uid).snapshots()
+        .map(_userDataFromSnapshot);
   }
 
   

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readyuser/models/vendor.dart';
-import 'package:readyuser/screens/home/vendor_tile.dart';
+import 'package:readyuser/screens/home/vendors/vendor_tile.dart';
 
 class VendorList extends StatefulWidget {
   final Function selectVendor;

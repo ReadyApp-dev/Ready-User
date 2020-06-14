@@ -1,6 +1,6 @@
 import 'package:readyuser/models/item.dart';
 import 'package:readyuser/models/user.dart';
-import 'package:readyuser/screens/home/item_tile.dart';
+import 'package:readyuser/screens/home/cartAndMenu/item_tile.dart';
 import 'package:readyuser/screens/payment/upi_pay.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
@@ -26,7 +26,7 @@ class _CartWidgetState extends State<CartWidget> {
           List<Item> data = snapshot.data;
 
           if (data == null) return Loading();
-          myCart = data;
+          myCart = new List.from(data);
           print(myCart);
           sum = 0.0;
           myCart.forEach((element) {sum += element.cost*element.quantity;});

@@ -13,8 +13,18 @@ class DrawerList extends StatelessWidget {
         ),
       ),
       ListTile(
-        leading: Icon(Icons.photo),
-        title: Text('First layout'),
+        leading: Icon(Icons.home),
+        title: Text('Home'),
+        onTap: (){setValue(1);},
+      ),
+      ListTile(
+        leading: Icon(Icons.account_box),
+        title: Text('Profile'),
+        onTap: (){setValue(2);},
+      ),
+      ListTile(
+        leading: Icon(Icons.history),
+        title: Text('Order History'),
         onTap: (){setValue(3);},
       ),
       ListTile(
@@ -22,8 +32,8 @@ class DrawerList extends StatelessWidget {
         //without leading =),
       ),
       ListTile(
-        leading: Icon(Icons.share),
-        title: Text('Share layout'),
+        leading: Icon(Icons.perm_contact_calendar),
+        title: Text('Contact Us'),
       )
     ];
     ListView lv = new ListView(children: lw,);

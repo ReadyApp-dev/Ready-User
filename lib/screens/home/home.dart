@@ -3,10 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:readyuser/models/item.dart';
 import 'package:readyuser/models/user.dart';
 import 'package:readyuser/models/vendor.dart';
+import 'package:readyuser/screens/home/account/edit_account.dart';
 import 'package:readyuser/screens/home/drawer_list.dart';
-import 'package:readyuser/screens/home/item_list.dart';
-import 'package:readyuser/screens/home/vendor_list.dart';
-import 'package:readyuser/screens/home/cart_list.dart';
+import 'package:readyuser/screens/home/cartAndMenu/menu_list.dart';
+import 'package:readyuser/screens/home/vendors/vendor_list.dart';
+import 'package:readyuser/screens/home/cartAndMenu/cart_list.dart';
 import 'package:readyuser/services/auth.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
@@ -70,6 +71,10 @@ class _HomeState extends State<Home> {
               drawer: Drawer(
                 child: DrawerList((int i){
                   print(i);
+                  setState(() {
+                    widget.drawerItemSelected = i;
+                    Navigator.of(context).pop();
+                  });
                 }),
               ),
                 backgroundColor: Colors.brown[50],
@@ -106,13 +111,54 @@ class _HomeState extends State<Home> {
                     ),
                   ):StreamProvider<List<Item>>.value(
                     value: DatabaseService().items,
-                    child:ItemList(),
+                    child:MenuList(),
                   ),
                 )
             )
         );
       }
-
+      break;
+      case 2: {
+        return new WillPopScope(
+            onWillPop: _onWillPop,
+            child:  Scaffold(
+                drawer: Drawer(
+                  child: DrawerList((int i){
+                    print(i);
+                    setState(() {
+                      widget.drawerItemSelected = i;
+                      Navigator.of(context).pop();
+                    });
+                  }),
+                ),
+                backgroundColor: Colors.brown[50],
+                appBar: AppBar(
+                  title: Text('Ready'),
+                  backgroundColor: Colors.brown[400],
+                  elevation: 0.0,
+                  actions: <Widget>[
+                    FlatButton.icon(
+                      icon: Icon(Icons.person),
+                      label: Text('logout'),
+                      onPressed: () async {
+                        await _auth.signOut();
+                      },
+                    ),
+                    FlatButton.icon(
+                      icon: Icon(Icons.shopping_cart),
+                      label: Text('cart'),
+                      onPressed: () => _showSettingsPanel(),
+                    )
+                  ],
+                ),
+                body: Container(
+                  color: Colors.brown[100],
+                  child: SettingsForm(),
+                )
+            )
+        );
+      }
+      break;
     }
 
 
