@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:readyuser/models/item.dart';
 import 'package:readyuser/models/user.dart';
 import 'package:readyuser/shared/constants.dart';
@@ -22,7 +21,6 @@ class _ItemTileState extends State<ItemTile> {
 
   @override
   Widget build(BuildContext context) {
-    int index;
     double sum = 0.0;
     _defaultValue = widget.item.quantity;
     _counter = widget.item.quantity;

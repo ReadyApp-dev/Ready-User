@@ -26,9 +26,8 @@ class _OrderWidgetState extends State<OrderWidget> {
     return StreamBuilder<List<Order>>(
         stream: DatabaseService(uid: user.uid).orderHistory,
         builder: (context, snapshot) {
+          if (snapshot.data == null) return Loading();
           List<Order> data = snapshot.data;
-
-
           return Column(
             children: <Widget>[
               Expanded(

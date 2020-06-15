@@ -6,6 +6,7 @@ import 'package:readyuser/screens/home/cartAndMenu/item_tile.dart';
 import 'package:readyuser/screens/home/vendors/vendor_tile.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
+import 'package:readyuser/shared/loading.dart';
 
 class MenuList extends StatefulWidget {
 
@@ -23,6 +24,7 @@ class _MenuListState extends State<MenuList> {
       stream: DatabaseService(uid: userUid).cart,
       builder: (context, snapshot) {
         List<Item> data = snapshot.data;
+        if(data == null) return Loading();
         print(data);
         return ListView.builder(
           itemCount: items.length,
