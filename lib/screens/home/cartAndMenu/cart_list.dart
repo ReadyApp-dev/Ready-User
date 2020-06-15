@@ -51,21 +51,34 @@ class _CartWidgetState extends State<CartWidget> {
               SizedBox(height: 10.0),
               Row(
                 children: <Widget>[
-
-                  RaisedButton(
-                    color: Colors.pink[400],
+                  Expanded(child: Padding(
+                    padding: const EdgeInsets.all(10.0),
                     child: Text(
-                      "Pay",
-                      style: TextStyle(color: Colors.white),
+                        "Total Cart Value:\n ${userCartVal}",
+                        style: TextStyle(
+                            color: Colors.pink[400],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.center,
                     ),
-                    onPressed: () async {
-                      print("yess");
-                      //Navigator.pop(context);
+                  )),
+                  Expanded(
+                    child: RaisedButton(
+                      color: Colors.pink[400],
+                      child: Text(
+                        "Pay and Checkout",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () async {
+                        print("yess");
+                        //Navigator.pop(context);
 
-                      Navigator.push(context, CupertinoPageRoute(builder: (context) => PaymentPage()));
-                      //Navigator.pop(context);
-                      print("noo");
-                    },
+                        Navigator.push(context, CupertinoPageRoute(builder: (context) => PaymentPage()));
+                        //Navigator.pop(context);
+                        print("noo");
+                      },
+                    ),
                   ),
                 ],
               )

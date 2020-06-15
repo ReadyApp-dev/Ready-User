@@ -33,8 +33,8 @@ class DatabaseService {
         name: doc.data['Name'] ?? '',
         id: doc.documentID,
         phoneNo: doc.data['strength'] ?? '0',
-        addr1: doc.data['address1'] ?? '0',
-        addr2: doc.data['address2'] ?? '0',
+        addr1: doc.data['addr1'] ?? '0',
+        addr2: doc.data['addr2'] ?? '0',
       );
     }).toList();
   }

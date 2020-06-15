@@ -3,6 +3,7 @@ import 'package:readyuser/models/item.dart';
 import 'package:readyuser/models/order.dart';
 import 'package:readyuser/screens/home/orderHistory/ordered_item.dart';
 import 'package:readyuser/screens/home/orderHistory/write_review.dart';
+import 'package:readyuser/shared/constants.dart';
 import 'package:readyuser/shared/loading.dart';
 import 'package:flutter/material.dart';
 
@@ -41,6 +42,19 @@ class OrderDetails extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10.0),
+            Expanded(child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                "Total Order Value:\n ${userCartVal}",
+                style: TextStyle(
+                  color: Colors.pink[400],
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            )),
+            SizedBox(height:10.0),
             RaisedButton(
               color: Colors.pink[400],
               child: Text(
