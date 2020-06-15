@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:readyuser/models/order.dart';
 import 'package:readyuser/models/vendor.dart';
+import 'package:readyuser/screens/home/orderHistory/orderDetails.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
 import 'package:readyuser/shared/loading.dart';
@@ -21,10 +23,6 @@ class _OrderTileState extends State<OrderTile> {
     return FutureBuilder(
       future: DatabaseService(uid: userUid).getVendorDetails(widget.order.vendor),
       builder: (context, snapshot) {
-        //List<Item> out = [];
-        //myMap.forEach((key, value) => out.add(new Item(id: key, cost: value['cost'], quantity: value['quantity'], name: value['name'])));
-        //print(out);
-
         if(snapshot.data == null) return Loading();
 
         Vendor vendorData = snapshot.data;
@@ -45,6 +43,8 @@ class _OrderTileState extends State<OrderTile> {
               ),
               title: Text(vendorData.name),
               subtitle: Text(' ${widget.order.totalCost} '),
+              onTap: () async {Navigator.push(context, CupertinoPageRoute(builder: (context) => OrderDetails(order: widget.order)));}
+
             ),
           ),
         );
