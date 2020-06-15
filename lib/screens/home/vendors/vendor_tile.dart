@@ -17,7 +17,7 @@ class VendorTile extends StatelessWidget {
         child: ListTile(
           leading: CircleAvatar(
             radius: 25.0,
-            backgroundColor: Colors.brown[vendor.strength],
+            backgroundColor: Colors.brown[300],
             //backgroundImage: AssetImage('assets/coffee_icon.png'),
           ),
           title: Text(vendor.name),

@@ -32,14 +32,14 @@ class DatabaseService {
       return Vendor(
         name: doc.data['Name'] ?? '',
         id: doc.documentID,
-        strength: doc.data['strength'] ?? 0,
-        addr1: doc.data['addr1'] ?? '0',
-        addr2: doc.data['addr2'] ?? '0',
+        phoneNo: doc.data['strength'] ?? 0,
+        addr1: doc.data['address1'] ?? '0',
+        addr2: doc.data['address2'] ?? '0',
       );
     }).toList();
   }
 
-  Future<void> userDetails() async{
+  Future<void> getUserDetails() async{
     return await userCollection.document(uid).get().then((value) {
 
       userUid = uid;
@@ -53,14 +53,27 @@ class DatabaseService {
 
     });
   }
+  
+  Future<Vendor> getVendorDetails(String vendorId) async{
+    return await vendorCollection.document(vendorId).get().then((value) {
+      return Vendor(
+        id: vendorId,
+        email: value.data['email'],
+        name: value.data['name'],
+        addr1: value.data['address1'],
+        addr2: value.data['address2'],
+        phoneNo: value.data['phoneNo'],
+      );
+    });
+  }
 
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
     return UserData(
       uid: uid,
       email: snapshot.data['email'],
       name: snapshot.data['name'],
-      addr1: snapshot.data['addr1'],
-      addr2: snapshot.data['addr2'],
+      addr1: snapshot.data['address1'],
+      addr2: snapshot.data['address2'],
       phoneNo: snapshot.data['phoneNo'],
       cartVendor: snapshot.data['cartVendor'],
       cartVal: snapshot.data['cartVal'],
@@ -132,8 +145,8 @@ class DatabaseService {
         ds.reference.delete();
       }
     });
-
   }
+  
 
   // delete all documents in a collection
   Future<void> _deleteAll(QuerySnapshot snapshot) async {

@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
 
     User user = Provider.of<User>(context);
     userUid = user.uid;
-    DatabaseService(uid: userUid).userDetails();
+    DatabaseService(uid: userUid).getUserDetails();
 
     void _showSettingsPanel() {
       showModalBottomSheet(context: context, builder: (context) {
