@@ -32,7 +32,7 @@ class DatabaseService {
       return Vendor(
         name: doc.data['Name'] ?? '',
         id: doc.documentID,
-        phoneNo: doc.data['strength'] ?? 0,
+        phoneNo: doc.data['strength'] ?? '0',
         addr1: doc.data['address1'] ?? '0',
         addr2: doc.data['address2'] ?? '0',
       );
@@ -59,9 +59,9 @@ class DatabaseService {
       return Vendor(
         id: vendorId,
         email: value.data['email'],
-        name: value.data['name'],
-        addr1: value.data['address1'],
-        addr2: value.data['address2'],
+        name: value.data['Name'],
+        addr1: value.data['addr1'],
+        addr2: value.data['addr2'],
         phoneNo: value.data['phoneNo'],
       );
     });

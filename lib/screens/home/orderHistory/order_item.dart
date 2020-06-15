@@ -26,7 +26,13 @@ class _OrderTileState extends State<OrderTile> {
         //print(out);
 
         if(snapshot.data == null) return Loading();
+
         Vendor vendorData = snapshot.data;
+        print(snapshot.data);
+        print(vendorData.name);
+        print(vendorData.addr1);
+        print(vendorData.addr2);
+
         return Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: Card(
