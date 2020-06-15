@@ -14,12 +14,12 @@ class OrderedItemTile extends StatelessWidget {
         margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
           leading: CircleAvatar(
-            radius: 25.0,
+            radius: 20.0,
             backgroundColor: Colors.brown[200],
             //backgroundImage: AssetImage('assets/coffee_icon.png'),
           ),
           title: Text(item.name),
-          subtitle: Text(' ${item.id} '),
+          //subtitle: Text(' ${item.id} '),
           trailing: Text(' ${item.quantity}'),
         ),
       ),

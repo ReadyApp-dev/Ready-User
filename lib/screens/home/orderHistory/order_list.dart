@@ -24,29 +24,29 @@ class _OrderWidgetState extends State<OrderWidget> {
     User user = Provider.of<User>(context);
     print(user);
     return StreamBuilder<List<Order>>(
-        stream: DatabaseService(uid: user.uid).orderHistory,
-        builder: (context, snapshot) {
-          if (snapshot.data == null) return Loading();
-          List<Order> data = snapshot.data;
-          return Column(
-            children: <Widget>[
-              Expanded(
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    return OrderTile(
-                      order: data[index],
-                    );
-                  },
-                ),
+      stream: DatabaseService(uid: user.uid).orderHistory,
+      builder: (context, snapshot) {
+        if (snapshot.data == null) return Loading();
+        List<Order> data = snapshot.data;
+        return Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: data.length,
+                itemBuilder: (context, index) {
+                  return OrderTile(
+                    order: data[index],
+                  );
+                },
               ),
-              SizedBox(height: 10.0),
+            ),
+            SizedBox(height: 10.0),
 
-            ],
-          );
-        }
+          ],
+        );
+      }
     );
   }
 }

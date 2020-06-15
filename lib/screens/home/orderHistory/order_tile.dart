@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:readyuser/models/order.dart';
 import 'package:readyuser/models/vendor.dart';
-import 'package:readyuser/screens/home/orderHistory/orderDetails.dart';
+import 'package:readyuser/screens/home/orderHistory/order_details.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
 import 'package:readyuser/shared/loading.dart';
