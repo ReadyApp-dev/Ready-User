@@ -61,9 +61,19 @@ class _SettingsFormState extends State<SettingsForm> {
                     TextFormField(
                       initialValue: userName,
                       decoration: textInputDecoration.copyWith(hintText: 'Name'),
-                      validator: (val) => val.isEmpty ? 'Enter your' : null,
+                      validator: (val) {
+                        if(val.length < 3)
+                          return 'That is Not your name';
+                        Pattern pattern =
+                            r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]';
+                        RegExp regex = new RegExp(pattern);
+                        if (regex.hasMatch(val))
+                          return 'That is not your name';
+                        else
+                          return null;
+                      },
                       onChanged: (val) {
-                        setState(() => name = val);
+                       setState(() => name = val);
                       },
                     ),
                     SizedBox(height: 20.0),
@@ -88,7 +98,16 @@ class _SettingsFormState extends State<SettingsForm> {
                     TextFormField(
                       initialValue: userPhoneNo,
                       decoration: textInputDecoration.copyWith(hintText: 'Phone Number'),
-                      validator: (val) => val.length < 10 ? 'Enter a valid phone Number' : null,
+                      validator: (val) {
+                        if(val.length != 10)
+                          return 'Enter a valid phone Number without country code';
+                        Pattern pattern = r'[0-9]';
+                        RegExp regex = new RegExp(pattern);
+                        if (!regex.hasMatch(val))
+                          return 'Enter valid Phone number without country code';
+                        else
+                          return null;
+                      },
                       onChanged: (val) {
                         setState(() => phoneNo = val);
                       },
@@ -97,7 +116,7 @@ class _SettingsFormState extends State<SettingsForm> {
                     RaisedButton(
                         color: Colors.pink[400],
                         child: Text(
-                          'Register',
+                          'Edit Data',
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () async {

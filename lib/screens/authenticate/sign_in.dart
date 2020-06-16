@@ -7,7 +7,6 @@ class SignIn extends StatefulWidget {
 
   final Function toggleView;
   SignIn({ this.toggleView });
-
   @override
   _SignInState createState() => _SignInState();
 }
@@ -48,7 +47,16 @@ class _SignInState extends State<SignIn> {
               SizedBox(height: 20.0),
               TextFormField(
                 decoration: textInputDecoration.copyWith(hintText: 'email'),
-                validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                validator: (val) {
+                  if(val.isEmpty)
+                    return 'Please Enter your Email';
+                  Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                  RegExp regex = new RegExp(pattern);
+                  if(!regex.hasMatch(val))
+                    return 'Enter Valid Email';
+                  else
+                    return null;
+                },
                 onChanged: (val) {
                   setState(() => email = val);
                 },

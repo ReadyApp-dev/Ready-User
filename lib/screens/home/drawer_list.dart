@@ -7,7 +7,7 @@ class DrawerList extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> lw = [
       DrawerHeader(
-        child: Text('Custom Header'),
+        child: Text(''),
         decoration: BoxDecoration(
           color: Colors.blue,
         ),
