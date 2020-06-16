@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:readyuser/models/order.dart';
+import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
 
 class WriteReview extends StatefulWidget {
+  Order order;
+  WriteReview({this.order});
   @override
   _WriteReviewState createState() => _WriteReviewState();
 }
 
 class _WriteReviewState extends State<WriteReview> {
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  double star;
   String review;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Order Details'),
         backgroundColor: Colors.brown[400],
@@ -36,6 +43,7 @@ class _WriteReviewState extends State<WriteReview> {
               ),
               onRatingUpdate: (rating) {
                 print(rating);
+                star = rating;
               },
             ),
 
@@ -60,8 +68,11 @@ class _WriteReviewState extends State<WriteReview> {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () async {
-                print("yess");
-                print("noo");
+                final snackBar = SnackBar(
+                  content: Text('Review Submitted!'),
+                );
+                DatabaseService(uid: userUid).updateReview(widget.order, star, review);
+                _scaffoldKey.currentState.showSnackBar(snackBar);
               },
             ),
             SizedBox(height: 20.0),

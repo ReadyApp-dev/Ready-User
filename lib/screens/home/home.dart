@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:readyuser/models/item.dart';
 import 'package:readyuser/models/user.dart';
@@ -40,12 +41,12 @@ class _HomeState extends State<Home> {
     }
 
     Future<bool> _onWillPop() async {
-      if(widget.showVendors == false){
+      if(widget.drawerItemSelected == 1 && widget.showVendors == false){
         setState(() {
           widget.showVendors = true;
         });
         return false;
-      }else{(await showDialog(
+      }else if(widget.drawerItemSelected != 1){(await showDialog(
         context: context,
         builder: (context) => new AlertDialog(
           title: new Text('Are you sure?'),
@@ -56,7 +57,7 @@ class _HomeState extends State<Home> {
               child: new Text('No'),
             ),
             new FlatButton(
-              onPressed: () => Navigator.of(context).pop(true),
+              onPressed: () => SystemNavigator.pop(),
               child: new Text('Yes'),
             ),
           ],

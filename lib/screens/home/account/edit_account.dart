@@ -115,7 +115,7 @@ class _SettingsFormState extends State<SettingsForm> {
                             UserData newUserData = new UserData(email:email,uid:userUid,name: name, addr1: addr1, addr2: addr2, phoneNo: phoneNo,cartVal: userCartVal,cartVendor: userCartVendor);
                             await DatabaseService(uid: userUid).updateUserData(newUserData);
                             final snackBar = SnackBar(
-                              content: Text('Yay! A SnackBar!'),
+                              content: Text('Data Updated!'),
                             );
 
                             // Find the Scaffold in the widget tree and use

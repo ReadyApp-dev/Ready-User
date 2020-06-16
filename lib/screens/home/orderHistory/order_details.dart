@@ -64,7 +64,7 @@ class OrderDetails extends StatelessWidget {
               onPressed: () async {
                 print("yess");
                 //Navigator.pop(context);
-                Navigator.push(context, CupertinoPageRoute(builder: (context) => WriteReview()));
+                Navigator.push(context, CupertinoPageRoute(builder: (context) => WriteReview(order: order)));
                 //Navigator.pop(context);
                 print("noo");
               },

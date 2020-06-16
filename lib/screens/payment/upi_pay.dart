@@ -130,12 +130,13 @@ class _PaymentPageState extends State<PaymentPage> {
                       print('Transaction Successful');
                       Order order = new Order(
                         cart:  myMap?? '',
-                        status: "Order Plaved",
+                        status: "Order Placed",
                         totalCost: userCartVal ?? '0.0',
                         user: userUid ?? '0',
                         vendor: userCartVendor ?? '0',
                       );
                       DatabaseService(uid: userUid).addOrderData(order);
+                      DatabaseService(uid: userUid).addOrderDataVendor(order);
                       return AlertDialog(
                         title: new Text('Success!'),
                         content: new Text('Order placed successfully'),
@@ -145,6 +146,8 @@ class _PaymentPageState extends State<PaymentPage> {
                               Navigator.of(context).pop();
                               Navigator.of(context).pop();
                               await DatabaseService(uid: userUid).clearCart();
+                              userCartVal = 0.0;
+                              userCartVendor = '';
                             },
                             child: new Text('OK'),
                           ),
@@ -173,7 +176,7 @@ class _PaymentPageState extends State<PaymentPage> {
                               onPressed: () async {
                                 Navigator.of(context).pop();
                                 Navigator.of(context).pop();
-                                await DatabaseService(uid: userUid).clearCart();
+                                //await DatabaseService(uid: userUid).clearCart();
                               },
                               child: new Text('OK'),
                             ),

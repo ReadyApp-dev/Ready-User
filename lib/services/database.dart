@@ -113,6 +113,15 @@ class DatabaseService {
       'vendor': order.vendor,
     });
   }
+  Future<void> addOrderDataVendor(Order order) async {
+    return await vendorCollection.document(order.vendor).collection("orderHistory").add({
+      'cart': order.cart,
+      'status': order.status,
+      'totalCost': order.totalCost,
+      'user': order.user,
+      'vendor': order.vendor,
+    });
+  }
 
   Future<void> updateOrderData(Order order) async {
     return await userCollection.document(uid).collection("orderHistory").document(order.id).setData({
@@ -121,6 +130,23 @@ class DatabaseService {
       'totalCost': order.totalCost,
       'user': order.user,
       'vendor': order.vendor,
+    });
+  }
+
+  Future<void> updateOrderDataVendor(Order order) async {
+    return await vendorCollection.document(order.vendor).collection("orderHistory").document(order.id).setData({
+      'cart': order.cart,
+      'status': order.status,
+      'totalCost': order.totalCost,
+      'user': order.user,
+      'vendor': order.vendor,
+    });
+  }
+
+  Future<void> updateReview(Order order,double star, String review) async {
+    return await vendorCollection.document(order.vendor).collection("reviews").document(order.id).setData({
+      'star': star,
+      'review': review,
     });
   }
 
