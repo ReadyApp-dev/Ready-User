@@ -15,17 +15,12 @@ class _SettingsFormState extends State<SettingsForm> {
   final _formKey = GlobalKey<FormState>();
 
   // text field state
-  String email = '';
+  String email = userEmail;
   String password = '';
-  String name = '';
-  String addr1 = '';
-  String addr2 = '';
-  String phoneNo = '';
-
-  // form values
-  String _currentName;
-  String _currentSugars;
-  int _currentStrength;
+  String name = userName;
+  String addr1 = userAddr1;
+  String addr2 = userAddr2;
+  String phoneNo = userPhoneNo;
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +31,6 @@ class _SettingsFormState extends State<SettingsForm> {
         stream: DatabaseService(uid: user.uid).userData,
         builder: (context, snapshot) {
           if(snapshot.data == null) return Loading();
-
-          email = userEmail;
-          name = userName;
-          addr1 = userAddr1;
-          addr2 = userAddr2;
-          phoneNo = userPhoneNo;
-
 
           UserData userData = snapshot.data;
           return  Scaffold(
@@ -59,7 +47,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 child: ListView(
                   children: <Widget>[
                     SizedBox(height: 20.0),
-                    TextFormField(
+                    /*TextFormField(
                       initialValue: userEmail,
                       decoration: textInputDecoration.copyWith(hintText: 'E-Mail'),
                       validator: (val) => val.isEmpty ? 'Enter an email' : null,
@@ -67,6 +55,8 @@ class _SettingsFormState extends State<SettingsForm> {
                         setState(() => email = val);
                       },
                     ),
+
+                     */
                     SizedBox(height: 20.0),
                     TextFormField(
                       initialValue: userName,
@@ -112,8 +102,17 @@ class _SettingsFormState extends State<SettingsForm> {
                         ),
                         onPressed: () async {
                           if(_formKey.currentState.validate()){
-                            UserData newUserData = new UserData(email:email,uid:userUid,name: name, addr1: addr1, addr2: addr2, phoneNo: phoneNo,cartVal: userCartVal,cartVendor: userCartVendor);
-                            await DatabaseService(uid: userUid).updateUserData(newUserData);
+                            print(email+" "+userUid+" "+name+" "+addr1+" "+addr2+" "+phoneNo);
+                            UserData userData = new UserData(
+                                email:email,
+                                uid:userUid,
+                                name: name,
+                                addr1: addr1,
+                                addr2: addr2,
+                                phoneNo: phoneNo,
+                                cartVal: userCartVal,
+                                cartVendor: userCartVendor);
+                            await DatabaseService(uid: userUid).updateUserData(userData);
                             final snackBar = SnackBar(
                               content: Text('Data Updated!'),
                             );
