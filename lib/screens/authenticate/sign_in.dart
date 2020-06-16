@@ -21,8 +21,11 @@ class _SignInState extends State<SignIn> {
   // text field state
   String email = '';
   String password = '';
-
+  bool passwordvisible;
   @override
+  void initState(){
+    passwordvisible=true;
+  }
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
       backgroundColor: Colors.brown[100],
@@ -63,8 +66,24 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
-                obscureText: true,
-                decoration: textInputDecoration.copyWith(hintText: 'password'),
+                obscureText:passwordvisible,
+                decoration: textInputDecoration.copyWith(hintText: 'password',
+                suffixIcon: IconButton(
+                  icon: Icon(
+                  // Based on passwordVisible state choose the icon
+                  passwordvisible
+                  ? Icons.visibility
+                  : Icons.visibility_off,
+                  color: Theme.of(context).primaryColorDark,
+                ),
+                onPressed: () {
+                  // Update the state i.e. toogle the state of passwordVisible variable
+                  setState(() {
+                    passwordvisible = !passwordvisible;
+                  });
+                },
+                )
+                ),
                 validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
                 onChanged: (val) {
                   setState(() => password = val);
