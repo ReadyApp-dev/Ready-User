@@ -30,7 +30,7 @@ class DatabaseService {
     return snapshot.documents.map((doc){
       //print(doc.documentID);
       return Vendor(
-        name: doc.data['Name'] ?? '',
+        name: doc.data['name'] ?? '',
         uid: doc.documentID,
         phoneNo: doc.data['phone'] ?? '0',
         addr1: doc.data['address1'] ?? '0',
@@ -59,7 +59,7 @@ class DatabaseService {
       return Vendor(
         uid: vendorId,
         email: value.data['email'],
-        name: value.data['Name'],
+        name: value.data['name'],
         addr1: value.data['address1'],
         addr2: value.data['address2'],
         phoneNo: value.data['phone'],
