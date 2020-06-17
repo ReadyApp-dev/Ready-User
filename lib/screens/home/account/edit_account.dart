@@ -132,6 +132,11 @@ class _SettingsFormState extends State<SettingsForm> {
                                 cartVal: userCartVal,
                                 cartVendor: userCartVendor);
                             await DatabaseService(uid: userUid).updateUserData(userData);
+                            userEmail = email;
+                            userName = name;
+                            userAddr1 = addr1;
+                            userAddr2 = addr2;
+                            userPhoneNo = phoneNo;
                             final snackBar = SnackBar(
                               content: Text('Data Updated!'),
                             );

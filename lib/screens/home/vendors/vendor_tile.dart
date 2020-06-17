@@ -23,7 +23,7 @@ class VendorTile extends StatelessWidget {
           title: Text(vendor.name),
           subtitle: Text(' ${vendor.addr1} ${vendor.addr2} '),
           onTap: () {
-            currentVendor = vendor.id;
+            currentVendor = vendor.uid;
             print(currentVendor);
             selectVendor();
           }),

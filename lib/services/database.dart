@@ -31,10 +31,10 @@ class DatabaseService {
       //print(doc.documentID);
       return Vendor(
         name: doc.data['Name'] ?? '',
-        id: doc.documentID,
-        phoneNo: doc.data['strength'] ?? '0',
-        addr1: doc.data['addr1'] ?? '0',
-        addr2: doc.data['addr2'] ?? '0',
+        uid: doc.documentID,
+        phoneNo: doc.data['phone'] ?? '0',
+        addr1: doc.data['address1'] ?? '0',
+        addr2: doc.data['address2'] ?? '0',
       );
     }).toList();
   }
@@ -57,12 +57,12 @@ class DatabaseService {
   Future<Vendor> getVendorDetails(String vendorId) async{
     return await vendorCollection.document(vendorId).get().then((value) {
       return Vendor(
-        id: vendorId,
+        uid: vendorId,
         email: value.data['email'],
         name: value.data['Name'],
-        addr1: value.data['addr1'],
-        addr2: value.data['addr2'],
-        phoneNo: value.data['phoneNo'],
+        addr1: value.data['address1'],
+        addr2: value.data['address2'],
+        phoneNo: value.data['phone'],
       );
     });
   }
@@ -74,7 +74,7 @@ class DatabaseService {
       name: snapshot.data['name'],
       addr1: snapshot.data['address1'],
       addr2: snapshot.data['address2'],
-      phoneNo: snapshot.data['phoneNo'],
+      phoneNo: snapshot.data['phone'],
       cartVendor: snapshot.data['cartVendor'],
       cartVal: snapshot.data['cartVal'],
     );
