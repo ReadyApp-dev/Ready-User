@@ -117,7 +117,7 @@ class _RegisterState extends State<Register> {
                 validator: (val) {
                   if(val.length != 10)
                     return 'Enter a valid phone Number without country code';
-                  Pattern pattern = r'[0-9]';
+                  Pattern pattern = r'(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}';
                   RegExp regex = new RegExp(pattern);
                   if (!regex.hasMatch(val))
                     return 'Enter valid Phone number without country code';
