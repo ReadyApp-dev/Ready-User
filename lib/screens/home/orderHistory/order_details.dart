@@ -11,6 +11,7 @@ class OrderDetails extends StatelessWidget {
 
   Order order;
   OrderDetails({this.order});
+  bool recieved = false;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +56,19 @@ class OrderDetails extends StatelessWidget {
               ),
             )),
             SizedBox(height:10.0),
+            RaisedButton(
+              color: Colors.pink[400],
+              child: Text(
+                "Press if You Got what you wanted",
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: (){
+                setState(){
+                  recieved=true;
+                }
+              },
+            ),
+            SizedBox(height: 10),
             RaisedButton(
               color: Colors.pink[400],
               child: Text(
