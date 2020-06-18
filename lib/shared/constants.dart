@@ -10,13 +10,25 @@ String userAddr2 = '';
 String userPhoneNo = '';
 String userCartVendor = '';
 double userCartVal = 0.0;
-
+bool isVerified = false;
 List<Item> myCart = [];
 
 const textInputDecoration = InputDecoration(
   fillColor: Colors.white,
   filled: true,
   contentPadding: EdgeInsets.all(12.0),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.white, width: 2.0),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.pink, width: 2.0),
+  ),
+);
+
+const textInputDecorationSecond = InputDecoration(
+  filled: true,
+  contentPadding: EdgeInsets.all(12.0),
+  border: OutlineInputBorder(),
   enabledBorder: OutlineInputBorder(
     borderSide: BorderSide(color: Colors.white, width: 2.0),
   ),

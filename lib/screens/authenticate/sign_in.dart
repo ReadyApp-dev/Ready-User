@@ -10,7 +10,6 @@ class SignIn extends StatefulWidget {
   @override
   _SignInState createState() => _SignInState();
 }
-
 class _SignInState extends State<SignIn> {
 
   final AuthService _auth = AuthService();
@@ -22,6 +21,7 @@ class _SignInState extends State<SignIn> {
   String email = '';
   String password = '';
   bool passwordvisible;
+  bool forgotpassword=false;
   @override
   void initState(){
     passwordvisible=true;
@@ -65,7 +65,7 @@ class _SignInState extends State<SignIn> {
                 },
               ),
               SizedBox(height: 20.0),
-              TextFormField(
+              !forgotpassword ? TextFormField(
                 obscureText:passwordvisible,
                 decoration: textInputDecoration.copyWith(hintText: 'password',
                 suffixIcon: IconButton(
@@ -88,23 +88,50 @@ class _SignInState extends State<SignIn> {
                 onChanged: (val) {
                   setState(() => password = val);
                 },
+              ): Text("Enter Email to send password reset link"),
+              FlatButton(
+                child: !forgotpassword
+                    ? new Text('Forgot password?',
+                    style: new TextStyle(fontSize: 15.0, fontWeight: FontWeight.w300))
+                    : new Text('Go Back to Sign In',
+                    style:
+                    new TextStyle(fontSize: 15.0, fontWeight: FontWeight.w300)),
+                onPressed: () => setState(() {
+                  forgotpassword = !forgotpassword;
+                }),
               ),
               SizedBox(height: 20.0),
               RaisedButton(
                   color: Colors.pink[400],
                   child: Text(
-                    'Sign In',
+                    !forgotpassword ?'Sign In':'Send Link to Reset',
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () async {
-                    if(_formKey.currentState.validate()){
+                    if (_formKey.currentState.validate()) {
                       setState(() => loading = true);
-                      dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-                      if(result == null) {
+                      if(!forgotpassword) {
+                        dynamic result = await _auth.signInWithEmailAndPassword(
+                            email, password);
+                        if (result == null) {
+                          setState(() {
+                            loading = false;
+                            error = 'Could not sign in with those credentials';
+                          });
+                        }
+                      }
+                      else {
+                        await _auth.resetPassword(email);
                         setState(() {
                           loading = false;
-                          error = 'Could not sign in with those credentials';
+                          forgotpassword = !forgotpassword;
                         });
+                        /*
+                        final snackBar = SnackBar(
+                          content: Text('Link Sent!'),
+                        );
+                        Scaffold.of(context).showSnackBar(snackBar);
+                         */
                       }
                     }
                   }

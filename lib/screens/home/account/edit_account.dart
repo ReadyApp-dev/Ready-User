@@ -95,22 +95,50 @@ class _SettingsFormState extends State<SettingsForm> {
                       },
                     ),
                     SizedBox(height: 20.0),
-                    TextFormField(
-                      initialValue: userPhoneNo,
-                      decoration: textInputDecoration.copyWith(hintText: 'Phone Number'),
-                      validator: (val) {
-                        if(val.length != 10)
-                          return 'Enter a valid phone Number without country code';
-                        Pattern pattern = r'(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}';
-                        RegExp regex = new RegExp(pattern);
-                        if (!regex.hasMatch(val))
-                          return 'Enter valid Phone number without country code';
-                        else
-                          return null;
-                      },
-                      onChanged: (val) {
-                        setState(() => phoneNo = val);
-                      },
+                    Container(
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.055,
+                      child: ListView(
+                          scrollDirection: Axis.horizontal,
+                        children: <Widget>[
+                            Container(
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * 0.5,
+                              child: TextFormField(
+                                initialValue: userPhoneNo,
+                                decoration: textInputDecoration.copyWith(hintText: 'Phone Number'),
+                                validator: (val) {
+                                if(val.length != 10)
+                                  return 'Enter a valid phone Number without country code';
+                                Pattern pattern = r'(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}';
+                                RegExp regex = new RegExp(pattern);
+                                if (!regex.hasMatch(val))
+                                  return 'Enter valid Phone number without country code';
+                                else
+                                  return null;
+                                },
+                              onChanged: (val) {
+                                setState(() => phoneNo = val);
+                              },
+                            ),
+                          ),
+                          SizedBox(width: 20.0,),
+                          RaisedButton(
+                            color: Colors.pink[400],
+                            child: Text(
+                              'Verify',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            onPressed: () async {
+
+                            },
+                          )
+                        ]
+                      )
                     ),
                     SizedBox(height: 20.0),
                     RaisedButton(

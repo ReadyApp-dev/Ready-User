@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:readyuser/models/user.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
 
@@ -28,6 +29,13 @@ class AuthService {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
+      if(user.isEmailVerified){
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isVerified', true);
+        isVerified = true;
+      }else{
+        isVerified = false;
+      }
       userUid = user.uid;
       //UserData userData = await DatabaseService(uid: user.uid).userDetails();
       return user;
@@ -42,6 +50,7 @@ class AuthService {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
+      user.sendEmailVerification();
       // create a new document for the user with the uid
       userUid = user.uid;
       UserData userData = UserData(
@@ -71,5 +80,12 @@ class AuthService {
       return null;
     }
   }
-
+  Future resetPassword(String emailTarget) async {
+    try {
+      return await _auth.sendPasswordResetEmail(email: emailTarget);
+    } catch (error) {
+      print(error.toString());
+      return null;
+    }
+  }
 }

@@ -3,6 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:readyuser/models/user.dart';
 import 'package:readyuser/screens/authenticate/authenticate.dart';
 import 'package:readyuser/screens/home/home.dart';
+import 'package:readyuser/screens/landing.dart';
+import 'package:readyuser/shared/constants.dart';
+import 'package:readyuser/shared/loading.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Wrapper extends StatelessWidget {
   @override
@@ -14,7 +18,20 @@ class Wrapper extends StatelessWidget {
     if (user == null){
       return Authenticate();
     } else {
-      return Home();
+      return FutureBuilder<SharedPreferences>(
+          future: SharedPreferences.getInstance(),
+          builder: (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot){
+            if(snapshot.data == null) return Loading();
+            SharedPreferences pref= snapshot.data ;
+
+            isVerified = pref.getBool('isVerified')?? false;
+            if(isVerified){
+              return Home();
+            } else {
+              return Landing();
+            }
+          }
+      );
     }
 
   }
