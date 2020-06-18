@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:readyuser/shared/constants.dart';
 import 'package:flutter/material.dart';
 class DrawerList extends StatelessWidget {
@@ -9,15 +10,28 @@ class DrawerList extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> lw = [
       DrawerHeader(
-        child: Container(
-          child: Text('$name',
-            style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic,
-              color: Colors.brown[800],
-                fontSize: 50,
-              height: 2,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              child: Text(
+                'Welcome',
+                style: TextStyle(fontWeight: FontWeight.bold,fontStyle: FontStyle.italic,
+                color: Colors.brown[800],
+                  fontSize: 25,
+                ),
+              ),
             ),
-            textAlign: TextAlign.center,
-          ),
+            Container(
+              child: Text('$name',
+                style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic,
+                  color: Colors.brown[800],
+                    fontSize: 25,
+                ),
+              ),
+            ),
+          ],
         ),
         decoration: BoxDecoration(
           color: Colors.brown[200],
