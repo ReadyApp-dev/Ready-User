@@ -114,6 +114,7 @@ class _HomeState extends State<Home> {
                         userLatitude = pos.latitude;
                         userLongitude = pos.longitude;
                         print(userLatitude+userLongitude);
+                        currentVendor = '';
                         return VendorList(
                         selectVendor: (){
                           setState(() {

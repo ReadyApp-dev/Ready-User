@@ -37,15 +37,23 @@ class _CartWidgetState extends State<CartWidget> {
           return Column(
             children: <Widget>[
               Expanded(
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    return ItemTile(
-                      item: data[index],
-                    );
-                  },
+                child: StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setState) {
+                    return ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      return ItemTile(
+                        item: data[index],
+                        removeItem:(){
+                          setState((){
+                            data.removeAt(index);
+                          });
+                        },
+                      );
+                    },
+                  );}
                 ),
               ),
               SizedBox(height: 10.0),

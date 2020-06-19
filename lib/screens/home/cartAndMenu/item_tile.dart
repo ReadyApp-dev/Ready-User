@@ -8,8 +8,8 @@ import 'package:flutter_counter/flutter_counter.dart';
 
 class ItemTile extends StatefulWidget {
   final Item item;
-  ItemTile({ this.item });
-
+  Function removeItem;
+  ItemTile({ this.item , this.removeItem });
   @override
   _ItemTileState createState() => _ItemTileState();
 }
@@ -46,7 +46,7 @@ class _ItemTileState extends State<ItemTile> {
               onChanged: (value) async {
                 // get the latest value from here
                 bool yesPressed = true;
-                if(currentVendor != userCartVendor){
+                if(!myCart.isEmpty && currentVendor != userCartVendor && currentVendor!='' && userCartVendor!=''){
                   await showDialog(
                       context: context,
                       barrierDismissible: false,
@@ -101,7 +101,17 @@ class _ItemTileState extends State<ItemTile> {
                     _defaultValue = value;
                     _counter = value;
                   });
+                  if(value==0){
+                    DatabaseService(uid: userUid).removeItemFromCart(widget.item);
+                    int index = myCart.indexWhere((element) =>
+                    element.id == widget.item.id);
+                    myCart.removeAt(index);
+                  }
                   print(myCart);
+                  if(myCart.isEmpty){
+                    userCartVendor = '';
+                    userCartVal = 0.0;
+                  }
                 }
               },
             ),

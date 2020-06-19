@@ -25,6 +25,12 @@ class DatabaseService {
     });
   }
 
+  Future<void> removeItemFromCart(Item item) async {
+    print(item);
+    print(uid);
+    return await userCollection.document(uid).collection('cart').document(item.id).delete();
+  }
+
   // brew list from snapshot
   List<Vendor> _vendorListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc){
