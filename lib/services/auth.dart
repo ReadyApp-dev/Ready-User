@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:readyuser/models/user.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
@@ -13,6 +14,7 @@ class AuthService {
     if(user==null){
       return null;
     }
+    firebaseUser = user;
     userUid = user.uid;
     return  User(uid: user.uid);
   }
@@ -70,6 +72,21 @@ class AuthService {
       return null;
     }
   }
+  Future verifyPhone(String mobile, BuildContext context) async{
+
+    _auth.verifyPhoneNumber(
+        phoneNumber: mobile,
+        timeout: Duration(seconds: 600),
+        verificationCompleted:  (AuthCredential _authCredential) async{
+          print("works");
+          await firebaseUser.linkWithCredential(_authCredential).then((value) => firebaseUser=value.user);
+          print(firebaseUser);
+        },
+
+        verificationFailed: null,
+        codeSent: null,
+        codeAutoRetrievalTimeout: null
+    );}
 
   // sign out
   Future signOut() async {

@@ -4,7 +4,9 @@ import 'package:readyuser/shared/constants.dart';
 import 'package:readyuser/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:readyuser/screens/home/account/verify_phone.dart';
 class SettingsForm extends StatefulWidget {
   @override
   _SettingsFormState createState() => _SettingsFormState();
@@ -13,6 +15,7 @@ class SettingsForm extends StatefulWidget {
 class _SettingsFormState extends State<SettingsForm> {
 
   final _formKey = GlobalKey<FormState>();
+  final _formKey2 = GlobalKey<FormState>();
 
   // text field state
   String email = userEmail;
@@ -100,44 +103,50 @@ class _SettingsFormState extends State<SettingsForm> {
                             .of(context)
                             .size
                             .height * 0.055,
-                      child: ListView(
-                          scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                            Container(
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * 0.5,
-                              child: TextFormField(
-                                initialValue: userPhoneNo,
-                                decoration: textInputDecoration.copyWith(hintText: 'Phone Number'),
-                                validator: (val) {
-                                if(val.length != 10)
-                                  return 'Enter a valid phone Number without country code';
-                                Pattern pattern = r'(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}';
-                                RegExp regex = new RegExp(pattern);
-                                if (!regex.hasMatch(val))
-                                  return 'Enter valid Phone number without country code';
-                                else
-                                  return null;
+                      child: Form(
+                        key: _formKey2,
+                        child: ListView(
+                            scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                              Container(
+                                width: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width * 0.5,
+                                child: TextFormField(
+                                  initialValue: userPhoneNo,
+                                  decoration: textInputDecoration.copyWith(hintText: 'Phone Number'),
+                                  validator: (val) {
+                                  if(val.length != 10)
+                                    return 'Enter a valid phone Number without country code';
+                                  Pattern pattern = r'(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}';
+                                  RegExp regex = new RegExp(pattern);
+                                  if (!regex.hasMatch(val))
+                                    return 'Enter valid Phone number without country code';
+                                  else
+                                    return null;
+                                  },
+                                onChanged: (val) {
+                                  setState(() => phoneNo = val);
                                 },
-                              onChanged: (val) {
-                                setState(() => phoneNo = val);
+                              ),
+                            ),
+                            SizedBox(width: 20.0,),
+                            RaisedButton(
+                              color: Colors.pink[400],
+                              child: Text(
+                                'Verify',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () async {
+                                if(_formKey.currentState.validate()) {
+                                  Navigator.push(context, CupertinoPageRoute(
+                                      builder: (context) => VerifyPhone(phoneNo: phoneNo, otp: '')));
+                                }
                               },
-                            ),
-                          ),
-                          SizedBox(width: 20.0,),
-                          RaisedButton(
-                            color: Colors.pink[400],
-                            child: Text(
-                              'Verify',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onPressed: () async {
-
-                            },
-                          )
-                        ]
+                            )
+                          ]
+                        ),
                       )
                     ),
                     SizedBox(height: 20.0),

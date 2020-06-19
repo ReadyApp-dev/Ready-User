@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:readyuser/models/item.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 String currentVendor = "";
 String userUid = "";
 String userName = '';
@@ -10,6 +10,7 @@ String userAddr2 = '';
 String userPhoneNo = '';
 String userCartVendor = '';
 double userCartVal = 0.0;
+FirebaseUser firebaseUser;
 double userLatitude = 0.0;
 double userLongitude = 0.0;
 bool isVerified = false;
