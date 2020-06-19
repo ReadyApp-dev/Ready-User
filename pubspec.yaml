@@ -36,6 +36,7 @@ dependencies:
   upi_india: ^2.1.2
   shared_preferences: ^0.5.7+3
   flutter_rating_bar: ^3.0.1+1
+  geolocator: ^5.3.2+2
 
 dev_dependencies:
   flutter_test:

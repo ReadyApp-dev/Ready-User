@@ -28,13 +28,17 @@ class DatabaseService {
   // brew list from snapshot
   List<Vendor> _vendorListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc){
-      //print(doc.documentID);
+
+      print(doc.documentID);
       return Vendor(
         name: doc.data['name'] ?? '',
         uid: doc.documentID,
         phoneNo: doc.data['phone'] ?? '0',
         addr1: doc.data['address1'] ?? '0',
         addr2: doc.data['address2'] ?? '0',
+        latitude: doc.data['location'].latitude  ?? 0.0,
+        longitude: doc.data['location'].longitude  ?? 0.0,
+        isAvailable: doc.data['isAvailable'] ?? true,
       );
     }).toList();
   }
@@ -63,6 +67,9 @@ class DatabaseService {
         addr1: value.data['address1'],
         addr2: value.data['address2'],
         phoneNo: value.data['phone'],
+        latitude: value.data['location'].latitude  ?? 0.0,
+        longitude: value.data['location'].longitude  ?? 0.0,
+        isAvailable: value.data['isAvailable'] ?? true,
       );
     });
   }

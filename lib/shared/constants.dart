@@ -10,6 +10,8 @@ String userAddr2 = '';
 String userPhoneNo = '';
 String userCartVendor = '';
 double userCartVal = 0.0;
+double userLatitude = 0.0;
+double userLongitude = 0.0;
 bool isVerified = false;
 List<Item> myCart = [];
 

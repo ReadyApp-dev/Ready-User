@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:readyuser/models/item.dart';
 import 'package:readyuser/models/user.dart';
@@ -13,6 +14,7 @@ import 'package:readyuser/screens/home/cartAndMenu/cart_list.dart';
 import 'package:readyuser/services/auth.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
+import 'package:readyuser/shared/loading.dart';
 
 class Home extends StatefulWidget {
   bool showVendors = true;
@@ -103,13 +105,23 @@ class _HomeState extends State<Home> {
                   color: Colors.brown[100],
                   child: widget.showVendors? StreamProvider<List<Vendor>>.value(
                     value: DatabaseService().vendors,
-                    child:VendorList(
-                      selectVendor: (){
-                        setState(() {
-                          print("yes it works");
-                          widget.showVendors = false;
-                        });
-                      },
+                    child:FutureBuilder(
+                      future: Geolocator().getCurrentPosition(
+                          desiredAccuracy: LocationAccuracy.best),
+                      builder: (BuildContext context, AsyncSnapshot<Position> snapshot){
+                        if(snapshot.data == null) return Loading();
+                        Position pos = snapshot.data;
+                        userLatitude = pos.latitude;
+                        userLongitude = pos.longitude;
+                        print(userLatitude+userLongitude);
+                        return VendorList(
+                        selectVendor: (){
+                          setState(() {
+                            print("yes it works");
+                            widget.showVendors = false;
+                          });
+                        },
+                      );},
                     ),
                   ):StreamProvider<List<Item>>.value(
                     value: DatabaseService().items,
