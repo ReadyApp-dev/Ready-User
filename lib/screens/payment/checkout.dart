@@ -114,6 +114,7 @@ class _checkoutpageState extends State<checkoutpage> {
                               totalCost: userCartVal ?? '0.0',
                               user: userUid ?? '0',
                               vendor: userCartVendor ?? '0',
+                              paymentMethod: "Pay on Delivery",
                             );
                             print("order");
                             DatabaseService(uid: userUid).addOrderData(order);

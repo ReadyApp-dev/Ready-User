@@ -134,6 +134,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         totalCost: userCartVal ?? '0.0',
                         user: userUid ?? '0',
                         vendor: userCartVendor ?? '0',
+                        paymentMethod: "UPI",
                       );
                       DatabaseService(uid: userUid).addOrderData(order);
                       DatabaseService(uid: userUid).addOrderDataVendor(order);
@@ -164,6 +165,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         status: "Order Failed",
                         totalCost: userCartVal ?? '0.0',
                         user: userUid ?? '0',
+                        paymentMethod: "UPI",
                         vendor: userCartVendor ?? '0',
                       );
                       DatabaseService(uid: userUid).addOrderData(order);

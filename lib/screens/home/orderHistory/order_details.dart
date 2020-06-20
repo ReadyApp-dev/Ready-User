@@ -99,7 +99,7 @@ class OrderDetails extends StatelessWidget {
               onPressed: (){
                 order.status = 'Completed';
                 DatabaseService(uid: userUid).updateOrderData(order);
-                DatabaseService(uid: userUid).updateOrderDataVendor(order);
+                //DatabaseService(uid: userUid).updateOrderDataVendor(order);
               },
             ),
             SizedBox(height: 10),

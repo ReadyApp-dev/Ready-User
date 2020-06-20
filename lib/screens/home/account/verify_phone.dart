@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:readyuser/models/user.dart';
+import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
 
 class VerifyPhone extends StatefulWidget {
@@ -74,8 +76,21 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                         verificationCompleted: (
                             AuthCredential phoneAuthCredential) async {
                           await firebaseUser.linkWithCredential(
-                              phoneAuthCredential).then((value) {
+                              phoneAuthCredential).then((value) async{
                             firebaseUser = value.user;
+
+                            userPhoneNo = widget.phoneNo;
+                            UserData newUserData = new UserData(
+                              email:userEmail,
+                              uid:userUid,
+                              name: userName,
+                              addr1: userAddr1,
+                              addr2: userAddr2,
+                              phoneNo: userPhoneNo,
+                            );
+                            print(newUserData.phoneNo);
+                            await DatabaseService(uid: userUid).updateUserData(newUserData);
+
                             showDialog(
                                 context: context,
                                 builder: (context) {
@@ -149,8 +164,22 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                       firebaseUser = await FirebaseAuth.instance.currentUser();
                       print(firebaseUser.uid);
                       firebaseUser.linkWithCredential(_phoneAuthCredential)
-                          .then((value) {
+                          .then((value) async{
                         firebaseUser = value.user;
+
+                        userPhoneNo = widget.phoneNo;
+                        UserData newUserData = new UserData(
+                          email:userEmail,
+                          uid:userUid,
+                          name: userName,
+                          addr1: userAddr1,
+                          addr2: userAddr2,
+                          phoneNo: userPhoneNo,
+                        );
+                        print(newUserData.phoneNo);
+                        await DatabaseService(uid: userUid).updateUserData(newUserData);
+
+
                         showDialog(
                             context: context,
                             builder: (context) {

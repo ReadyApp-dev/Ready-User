@@ -27,7 +27,7 @@ class _WriteReviewState extends State<WriteReview> {
       ),
       body: Container(
         color: Colors.brown[100],
-        child: Column(
+        child: ListView(
           children: <Widget>[
             SizedBox(height: 40.0),
             RatingBar(
