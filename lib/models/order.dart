@@ -5,6 +5,7 @@ class Order{
   String user;
   String vendor;
   String id;
+  String paymentMethod;
 
-  Order({this.id, this.status, this.cart, this.totalCost, this.user, this.vendor});
+  Order({this.id, this.status, this.cart, this.totalCost, this.user, this.vendor,this.paymentMethod});
 }

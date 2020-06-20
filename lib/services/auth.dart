@@ -31,11 +31,16 @@ class AuthService {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
+      isVerified = false;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isVerified', false);
       if(user.isEmailVerified){
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool('isVerified', true);
         isVerified = true;
       }else{
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isVerified', false);
         isVerified = false;
       }
       userUid = user.uid;

@@ -86,15 +86,12 @@ class _checkoutpageState extends State<checkoutpage> {
                         RaisedButton(
                           color: Colors.pink[400],
                           child: Text(
-                            "Pay",
+                            "Pay Using UPI",
                             style: TextStyle(color: Colors.white),
                           ),
                           onPressed: () async {
-                            print("yess");
                             Navigator.pop(context);
                             Navigator.push(context, CupertinoPageRoute(builder: (context) => PaymentPage()));
-                            //Navigator.pop(context);
-                            print("noo");
                           },
                         ),
                         RaisedButton(
@@ -121,14 +118,14 @@ class _checkoutpageState extends State<checkoutpage> {
                             print("order");
                             DatabaseService(uid: userUid).addOrderData(order);
                             DatabaseService(uid: userUid).addOrderDataVendor(order);
-          showDialog(
-            context:context,
+                            showDialog(
+                            context:context,
                             child:  new AlertDialog(
                                 title: new Text('Success!'),
                                 content: new Text('Order placed successfully'),
                                 actions: <Widget>[
                                   new FlatButton(
-                                    child: Text("Payed"),
+                                    child: Text("Have a nice day after you press me"),
                                     onPressed: () async{
                                       Navigator.of(context).pop();
                                       Navigator.of(context).pop();

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:readyuser/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:readyuser/shared/constants.dart';
 
 class Landing extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -32,7 +34,27 @@ class Landing extends StatelessWidget {
         ),
         body: Container(
           color: Colors.brown[100],
-          child: Text("Verify your mail ID and login again"),
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
+          child: Column(
+            children: <Widget>[
+              Text("Verify your mail ID and login again"),
+              SizedBox(height: 20.0,),
+              RaisedButton(
+                color: Colors.pink[400],
+                child: Text(
+                  "Resend Mail",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () async {
+                  firebaseUser = await FirebaseAuth.instance.currentUser();
+                  firebaseUser.sendEmailVerification();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

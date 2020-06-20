@@ -42,7 +42,7 @@ class _OrderTileState extends State<OrderTile> {
                 //backgroundImage: AssetImage('assets/coffee_icon.png'),
               ),
               title: Text(vendorData.name),
-              subtitle: Text('Amount: ${widget.order.totalCost} '),
+              subtitle: Text('Amount: ₹${widget.order.totalCost} '),
               onTap: () async {Navigator.push(context, CupertinoPageRoute(builder: (context) => OrderDetails(order: widget.order, vendor: vendorData)));},
               trailing: Text(' ${widget.order.status} '),
 

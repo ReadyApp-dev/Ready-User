@@ -35,7 +35,7 @@ class _ItemTileState extends State<ItemTile> {
               //backgroundImage: AssetImage('assets/coffee_icon.png'),
             ),
             title: Text(widget.item.name),
-            subtitle: Text(' ${widget.item.id} '),
+            subtitle: Text('Cost: ₹${widget.item.id} '),
 
             trailing: Counter(
               initialValue: _defaultValue,

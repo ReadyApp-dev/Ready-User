@@ -124,6 +124,7 @@ class DatabaseService {
       'totalCost': order.totalCost,
       'user': order.user,
       'vendor': order.vendor,
+      'paymentMethod':order.paymentMethod,
     });
   }
   Future<void> addOrderDataVendor(Order order) async {
@@ -133,6 +134,7 @@ class DatabaseService {
       'totalCost': order.totalCost,
       'user': order.user,
       'vendor': order.vendor,
+      'paymentMethod':order.paymentMethod,
     });
   }
 
@@ -143,6 +145,7 @@ class DatabaseService {
       'totalCost': order.totalCost,
       'user': order.user,
       'vendor': order.vendor,
+    'paymentMethod':order.paymentMethod,
     });
   }
 
@@ -153,6 +156,7 @@ class DatabaseService {
       'totalCost': order.totalCost,
       'user': order.user,
       'vendor': order.vendor,
+    'paymentMethod':order.paymentMethod,
     });
   }
 
@@ -226,5 +230,5 @@ class DatabaseService {
         .map(_orderListFromSnapshot);
   }
 
-  
+
 }
