@@ -166,7 +166,7 @@ class DatabaseService {
   // brew list from snapshot
   List<Order> _orderListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc){
-      //print(doc.documentID);
+      print(doc.documentID);
       return Order(
         id: doc.documentID,
         cart: doc.data['cart'] ?? '',
