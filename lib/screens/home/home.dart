@@ -215,6 +215,47 @@ class _HomeState extends State<Home> {
         );
       }
       break;
+      case 4: {
+        return new WillPopScope(
+            onWillPop: _onWillPop,
+            child:  Scaffold(
+                drawer: Drawer(
+                  child: DrawerList((int i){
+                    print(i);
+                    setState(() {
+                      widget.drawerItemSelected = i;
+                      Navigator.of(context).pop();
+                    });
+                  }),
+                ),
+                backgroundColor: Colors.brown[50],
+                appBar: AppBar(
+                  title: Text('Ready'),
+                  backgroundColor: Colors.brown[400],
+                  elevation: 0.0,
+                  actions: <Widget>[
+                    FlatButton.icon(
+                      icon: Icon(Icons.person),
+                      label: Text('logout'),
+                      onPressed: () async {
+                        await _auth.signOut();
+                      },
+                    ),
+                    FlatButton.icon(
+                      icon: Icon(Icons.shopping_cart),
+                      label: Text('cart'),
+                      onPressed: () => _showSettingsPanel(),
+                    )
+                  ],
+                ),
+                body: Container(
+                  color: Colors.brown[100],
+                  child: OrderWidget(),
+                )
+            )
+        );
+      }
+      break;
     }
 
 
