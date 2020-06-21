@@ -6,6 +6,7 @@ import 'package:readyuser/models/item.dart';
 import 'package:readyuser/models/user.dart';
 import 'package:readyuser/models/vendor.dart';
 import 'package:readyuser/screens/home/account/edit_account.dart';
+import 'package:readyuser/screens/home/contact_page.dart';
 import 'package:readyuser/screens/home/drawer_list.dart';
 import 'package:readyuser/screens/home/cartAndMenu/menu_list.dart';
 import 'package:readyuser/screens/home/orderHistory/order_list.dart';
@@ -42,13 +43,13 @@ class _HomeState extends State<Home> {
       },);
     }
 
-    Future<bool> _onWillPop() async {
+    Future<bool> _onPopExit() async {
       if(widget.drawerItemSelected == 1 && widget.showVendors == false){
         setState(() {
           widget.showVendors = true;
         });
         return false;
-      }else if(widget.drawerItemSelected != 1){(await showDialog(
+      }else {(await showDialog(
         context: context,
         builder: (context) => new AlertDialog(
           title: new Text('Are you sure?'),
@@ -67,16 +68,25 @@ class _HomeState extends State<Home> {
       )) ?? false;
       }
     }
+
+    Future<bool> _onPopHome() async {
+      setState(() {
+        widget.drawerItemSelected = 1;
+        widget.showVendors = true;
+      });
+    }
+
     switch(widget.drawerItemSelected){
       case 1: {
         return new WillPopScope(
-            onWillPop: _onWillPop,
+            onWillPop: _onPopExit,
             child:  Scaffold(
               drawer: Drawer(
                 child: DrawerList((int i){
                   print(i);
                   setState(() {
                     widget.drawerItemSelected = i;
+                    widget.showVendors = true;
                     Navigator.of(context).pop();
                   });
                 }),
@@ -135,7 +145,7 @@ class _HomeState extends State<Home> {
       break;
       case 2: {
         return new WillPopScope(
-            onWillPop: _onWillPop,
+            onWillPop: _onPopHome,
             child:  Scaffold(
                 drawer: Drawer(
                   child: DrawerList((int i){
@@ -176,7 +186,7 @@ class _HomeState extends State<Home> {
       break;
       case 3: {
         return new WillPopScope(
-            onWillPop: _onWillPop,
+            onWillPop: _onPopHome,
             child:  Scaffold(
                 drawer: Drawer(
                   child: DrawerList((int i){
@@ -217,7 +227,7 @@ class _HomeState extends State<Home> {
       break;
       case 4: {
         return new WillPopScope(
-            onWillPop: _onWillPop,
+            onWillPop: _onPopHome,
             child:  Scaffold(
                 drawer: Drawer(
                   child: DrawerList((int i){
@@ -250,14 +260,12 @@ class _HomeState extends State<Home> {
                 ),
                 body: Container(
                   color: Colors.brown[100],
-                  child: OrderWidget(),
+                  child: ContactUs(),
                 )
             )
         );
       }
       break;
     }
-
-
   }
 }
