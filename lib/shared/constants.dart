@@ -14,6 +14,7 @@ FirebaseUser firebaseUser;
 double userLatitude = 0.0;
 double userLongitude = 0.0;
 bool isVerified = false;
+bool phoneVerified = false;
 List<Item> myCart = [];
 
 const textInputDecoration = InputDecoration(

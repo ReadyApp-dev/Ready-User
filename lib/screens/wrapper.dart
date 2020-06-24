@@ -23,7 +23,7 @@ class Wrapper extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot){
             if(snapshot.data == null) return Loading();
             SharedPreferences pref= snapshot.data ;
-
+            phoneVerified = pref.getBool('phoneVerified')?? false;
             isVerified = pref.getBool('isVerified')?? false;
             if(isVerified){
               return Home();

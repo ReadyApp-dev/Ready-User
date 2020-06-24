@@ -33,15 +33,19 @@ class AuthService {
       FirebaseUser user = result.user;
       isVerified = false;
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool('isVerified', false);
       if(user.isEmailVerified){
-        SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool('isVerified', true);
         isVerified = true;
       }else{
-        SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool('isVerified', false);
         isVerified = false;
+      }
+      if(user.phoneNumber == null){
+        prefs.setBool('phoneVerified', false);
+        phoneVerified = false;
+      }else{
+        prefs.setBool('phoneVerified', true);
+        phoneVerified = true;
       }
       userUid = user.uid;
       //UserData userData = await DatabaseService(uid: user.uid).userDetails();
@@ -71,6 +75,10 @@ class AuthService {
         cartVal: 0.0,
       );
       await DatabaseService(uid: user.uid).updateUserData(userData);
+      isVerified = false;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isVerified', false);
+      prefs.setBool('phoneVerified', false);
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());

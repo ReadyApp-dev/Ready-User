@@ -1,4 +1,5 @@
 import 'package:readyuser/models/user.dart';
+import 'package:readyuser/screens/home/account/profile_page.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
 import 'package:readyuser/shared/loading.dart';
@@ -24,6 +25,7 @@ class _SettingsFormState extends State<SettingsForm> {
   String addr1 = userAddr1;
   String addr2 = userAddr2;
   String phoneNo = userPhoneNo;
+  bool editProfile = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,14 @@ class _SettingsFormState extends State<SettingsForm> {
           if(snapshot.data == null) return Loading();
 
           UserData userData = snapshot.data;
-          return  Scaffold(
+          return  !editProfile ? ProfilePage(
+              user: userData,
+              changeMode: (){
+                setState(() {
+                  editProfile = !editProfile;
+                });
+              }
+          ) : Scaffold(
             backgroundColor: backgroundColor,
             body: Container(
               padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
@@ -93,58 +102,6 @@ class _SettingsFormState extends State<SettingsForm> {
                       },
                     ),
                     SizedBox(height: 20.0),
-                    Container(
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.055,
-                      child: Form(
-                        key: _formKey2,
-                        child: ListView(
-                            scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                              Container(
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width * 0.5,
-                                child: TextFormField(
-                                  initialValue: userPhoneNo,
-                                  decoration: textInputDecoration.copyWith(hintText: 'Phone Number'),
-                                  validator: (val) {
-                                  if(val.length != 10)
-                                    return 'Enter a valid phone Number without country code';
-                                  Pattern pattern = r'(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}';
-                                  RegExp regex = new RegExp(pattern);
-                                  if (!regex.hasMatch(val))
-                                    return 'Enter valid Phone number without country code';
-                                  else
-                                    return null;
-                                  },
-                                onChanged: (val) {
-                                  setState(() => phoneNo = val);
-                                },
-                              ),
-                            ),
-                            SizedBox(width: 20.0,),
-                            RaisedButton(
-                              color: buttonColor,
-                              child: Text(
-                                'Verify',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              onPressed: () async {
-                                if(_formKey.currentState.validate()) {
-                                  Navigator.push(context, CupertinoPageRoute(
-                                      builder: (context) => VerifyPhone(phoneNo: phoneNo, otp: '')));
-                                }
-                              },
-                            )
-                          ]
-                        ),
-                      )
-                    ),
-                    SizedBox(height: 20.0),
                     RaisedButton(
                         color: buttonColor,
                         child: Text(
@@ -163,7 +120,11 @@ class _SettingsFormState extends State<SettingsForm> {
                                 phoneNo: phoneNo,
                                 cartVal: userCartVal,
                                 cartVendor: userCartVendor);
-                            await DatabaseService(uid: userUid).updateUserData(userData);
+                            await DatabaseService(uid: userUid).updateUserData(userData).then((value) {
+                              setState(() {
+                                editProfile = !editProfile;
+                              });
+                            });
                             userEmail = email;
                             userName = name;
                             userAddr1 = addr1;

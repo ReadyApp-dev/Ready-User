@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:readyuser/models/user.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class VerifyPhone extends StatefulWidget {
   String phoneNo;
@@ -16,6 +17,31 @@ class _VerifyPhoneState extends State<VerifyPhone> {
   final _formKey = GlobalKey<FormState>();
   bool showButton = false;
   String verifyId;
+
+
+
+  Future<dynamic> showError(BuildContext context,Exception error) {
+    SharedPreferences
+        .getInstance().then((value) => value.setBool('phoneVerified', false));
+    phoneVerified = false;
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return new AlertDialog(
+            title: new Text('Verification failed!'),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+                child: new Text('OK'),
+              ),
+            ],
+          );
+        }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +116,10 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                             );
                             print(newUserData.phoneNo);
                             await DatabaseService(uid: userUid).updateUserData(newUserData);
-
+                            SharedPreferences prefs = await SharedPreferences
+                                .getInstance();
+                            prefs.setBool('phoneVerified', true);
+                            phoneVerified = true;
                             showDialog(
                                 context: context,
                                 builder: (context) {
@@ -108,26 +137,13 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                                   );
                                 }
                             );
+                          }).catchError((e){
+                            showError(context, e);
                           });
                         },
-                        verificationFailed: (AuthException error) =>
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return new AlertDialog(
-                                    title: new Text('Verification failed!'),
-                                    actions: <Widget>[
-                                      new FlatButton(
-                                        onPressed: () async {
-                                          Navigator.of(context).pop();
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: new Text('OK'),
-                                      ),
-                                    ],
-                                  );
-                                }
-                            ),
+                        verificationFailed: (AuthException error) async {
+                          showError(context, error);
+                        },
                         codeSent: (String verificationId,
                             [int forceResendingToken]) {
                           verifyId = verificationId;
@@ -178,8 +194,10 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                         );
                         print(newUserData.phoneNo);
                         await DatabaseService(uid: userUid).updateUserData(newUserData);
-
-
+                        SharedPreferences prefs = await SharedPreferences
+                            .getInstance();
+                        prefs.setBool('phoneVerified', true);
+                        phoneVerified = true;
                         showDialog(
                             context: context,
                             builder: (context) {
@@ -197,6 +215,8 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                               );
                             }
                         );
+                      }).catchError((e){
+                        showError(context, e);
                       });
                     }
                   }
