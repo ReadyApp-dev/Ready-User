@@ -20,7 +20,7 @@ class Landing extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
             title: Text('Ready'),
-            backgroundColor: Colors.brown[400],
+            backgroundColor: appBarColor,
             elevation: 0.0,
             actions: <Widget>[
               FlatButton.icon(
@@ -33,7 +33,7 @@ class Landing extends StatelessWidget {
             ]
         ),
         body: Container(
-          color: Colors.brown[100],
+          color: backgroundColor,
           width: MediaQuery
               .of(context)
               .size
@@ -43,7 +43,7 @@ class Landing extends StatelessWidget {
               Text("Verify your mail ID and login again"),
               SizedBox(height: 20.0,),
               RaisedButton(
-                color: Colors.pink[400],
+                color: buttonColor,
                 child: Text(
                   "Resend Mail",
                   style: TextStyle(color: Colors.white),

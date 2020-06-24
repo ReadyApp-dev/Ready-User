@@ -29,9 +29,9 @@ class _VerifyPhoneState extends State<VerifyPhone> {
     }
 
     return Scaffold(
-      backgroundColor: Colors.brown[100],
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.brown[400],
+        backgroundColor: appBarColor,
         elevation: 0.0,
         title: Text('Verify Phone'),
       ),
@@ -62,10 +62,10 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                  color: Colors.pink[400],
+                  color: buttonColor,
                   child: Text(
                     'Send Otp',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black),
                   ),
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
@@ -149,10 +149,10 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               ),
               SizedBox(height: 20.0),
               showButton? RaisedButton(
-                  color: Colors.pink[400],
+                  color: buttonColor,
                   child: Text(
                     'Confirm',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black),
                   ),
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {

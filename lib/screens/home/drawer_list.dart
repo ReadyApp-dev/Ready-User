@@ -18,7 +18,7 @@ class DrawerList extends StatelessWidget {
               child: Text(
                 'Welcome',
                 style: TextStyle(fontWeight: FontWeight.bold,fontStyle: FontStyle.italic,
-                color: Colors.brown[800],
+                color: backgroundColor,
                   fontSize: 25,
                 ),
               ),
@@ -26,7 +26,7 @@ class DrawerList extends StatelessWidget {
             Container(
               child: Text('$name',
                 style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic,
-                  color: Colors.brown[800],
+                  color: backgroundColor,
                     fontSize: 25,
                 ),
               ),
@@ -34,35 +34,40 @@ class DrawerList extends StatelessWidget {
           ],
         ),
         decoration: BoxDecoration(
-          color: Colors.brown[200],
+          color: appBarColor,
         ),
       ),
       ListTile(
-        leading: Icon(Icons.home),
-        title: Text('Home'),
+        leading: Icon(Icons.home,color: Colors.white,),
+        title: Text('Home',style: new TextStyle(color: Colors.white),),
         onTap: (){setValue(1);},
       ),
       ListTile(
-        leading: Icon(Icons.account_box),
-        title: Text('Profile'),
+        leading: Icon(Icons.account_box,color: Colors.white,),
+        title: Text('Profile',style: new TextStyle(color: Colors.white),),
         onTap: (){setValue(2);},
       ),
       ListTile(
-        leading: Icon(Icons.history),
-        title: Text('Order History'),
+        leading: Icon(Icons.history,color: Colors.white,),
+        title: Text('Order History',style: new TextStyle(color: Colors.white),),
         onTap: (){setValue(3);},
       ),
       ListTile(
-        title: Text('Communicate'),
+        title: Text('Communicate',style: new TextStyle(color: Colors.white),),
         //without leading =),
       ),
       ListTile(
-        leading: Icon(Icons.perm_contact_calendar),
-        title: Text('Contact Us'),
+        leading: Icon(Icons.perm_contact_calendar,color: Colors.white,),
+        title: Text('Contact Us',style: new TextStyle(color: Colors.white),),
         onTap: (){setValue(4);},
       )
     ];
-    ListView lv = new ListView(children: lw,);
+    Widget lv =new Container(
+        color: backgroundColor,
+        child:ListView(
+          children: lw,
+        )
+    );
     return lv;
   }
 }

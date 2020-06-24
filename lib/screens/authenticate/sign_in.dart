@@ -28,9 +28,9 @@ class _SignInState extends State<SignIn> {
   }
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
-      backgroundColor: Colors.brown[100],
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.brown[400],
+        backgroundColor: appBarColor,
         elevation: 0.0,
         title: Text('Sign in to Ready'),
         actions: <Widget>[
@@ -102,10 +102,10 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                  color: Colors.pink[400],
+                  color: buttonColor,
                   child: Text(
                     !forgotpassword ?'Sign In':'Send Link to Reset',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black),
                   ),
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {

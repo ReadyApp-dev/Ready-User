@@ -27,7 +27,7 @@ class OrderDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Order Details'),
-        backgroundColor: Colors.brown[400],
+        backgroundColor: appBarColor,
         elevation: 0.0,
         actions: <Widget>[
           FlatButton.icon(
@@ -47,7 +47,7 @@ class OrderDetails extends StatelessWidget {
         ],
       ),
       body: Container(
-      color: Colors.brown[100],
+      color: backgroundColor,
         child: Column(
           children: <Widget>[
             Expanded(
@@ -70,7 +70,7 @@ class OrderDetails extends StatelessWidget {
                   Text(
                     "Total Order Value:\n ${userCartVal}",
                     style: TextStyle(
-                      color: Colors.pink[400],
+                      color: buttonColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
@@ -80,7 +80,7 @@ class OrderDetails extends StatelessWidget {
                   Text(
                     "Payment Method:\n ${order.paymentMethod}",
                     style: TextStyle(
-                      color: Colors.pink[400],
+                      color: buttonColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
@@ -91,10 +91,10 @@ class OrderDetails extends StatelessWidget {
             )),
             SizedBox(height:10.0),
             RaisedButton(
-              color: Colors.pink[400],
+              color: buttonColor,
               child: Text(
                 "Press if You Got what you wanted",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black),
               ),
               onPressed: (){
                 order.status = 'Completed';
@@ -104,10 +104,10 @@ class OrderDetails extends StatelessWidget {
             ),
             SizedBox(height: 10),
             RaisedButton(
-              color: Colors.pink[400],
+              color: buttonColor,
               child: Text(
                 "Write Review",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black),
               ),
               onPressed: () async {
                 Navigator.push(context, CupertinoPageRoute(builder: (context) => WriteReview(order: order)));

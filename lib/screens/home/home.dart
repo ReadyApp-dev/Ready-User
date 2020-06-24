@@ -93,8 +93,12 @@ class _HomeState extends State<Home> {
               ),
                 backgroundColor: Colors.brown[50],
                 appBar: AppBar(
-                  title: Text('Ready'),
-                  backgroundColor: Colors.brown[400],
+                  title: Text('Ready',
+                    style: new TextStyle(
+                      color: Colors.black,
+                    ),),
+                  iconTheme: new IconThemeData(color: Colors.black),
+                  backgroundColor: appBarColor,
                   elevation: 0.0,
                   actions: <Widget>[
                     FlatButton.icon(
@@ -112,7 +116,7 @@ class _HomeState extends State<Home> {
                   ],
                 ),
                 body: Container(
-                  color: Colors.brown[100],
+                  color: backgroundColor,
                   child: widget.showVendors? StreamProvider<List<Vendor>>.value(
                     value: DatabaseService().vendors,
                     child:FutureBuilder(
@@ -156,10 +160,14 @@ class _HomeState extends State<Home> {
                     });
                   }),
                 ),
-                backgroundColor: Colors.brown[50],
+                backgroundColor: backgroundColor,
                 appBar: AppBar(
-                  title: Text('Ready'),
-                  backgroundColor: Colors.brown[400],
+                  title: Text('Ready',
+                    style: new TextStyle(
+                      color: Colors.black,
+                    ),),
+                  iconTheme: new IconThemeData(color: Colors.black),
+                  backgroundColor: appBarColor,
                   elevation: 0.0,
                   actions: <Widget>[
                     FlatButton.icon(
@@ -177,7 +185,7 @@ class _HomeState extends State<Home> {
                   ],
                 ),
                 body: Container(
-                  color: Colors.brown[100],
+                  color: backgroundColor,
                   child: SettingsForm(),
                 )
             )
@@ -197,10 +205,14 @@ class _HomeState extends State<Home> {
                     });
                   }),
                 ),
-                backgroundColor: Colors.brown[50],
+                backgroundColor: backgroundColor,
                 appBar: AppBar(
-                  title: Text('Ready'),
-                  backgroundColor: Colors.brown[400],
+                  title: Text('Ready',
+                    style: new TextStyle(
+                      color: Colors.black,
+                    ),),
+                  iconTheme: new IconThemeData(color: Colors.black),
+                  backgroundColor: appBarColor,
                   elevation: 0.0,
                   actions: <Widget>[
                     FlatButton.icon(
@@ -218,7 +230,7 @@ class _HomeState extends State<Home> {
                   ],
                 ),
                 body: Container(
-                  color: Colors.brown[100],
+                  color: backgroundColor,
                   child: OrderWidget(),
                 )
             )
@@ -238,10 +250,14 @@ class _HomeState extends State<Home> {
                     });
                   }),
                 ),
-                backgroundColor: Colors.brown[50],
+                backgroundColor: backgroundColor,
                 appBar: AppBar(
-                  title: Text('Ready'),
-                  backgroundColor: Colors.brown[400],
+                  title: Text('Ready',
+                    style: new TextStyle(
+                      color: Colors.black,
+                    ),),
+                  iconTheme: new IconThemeData(color: Colors.black),
+                  backgroundColor: appBarColor,
                   elevation: 0.0,
                   actions: <Widget>[
                     FlatButton.icon(
@@ -259,7 +275,7 @@ class _HomeState extends State<Home> {
                   ],
                 ),
                 body: Container(
-                  color: Colors.brown[100],
+                  color: backgroundColor,
                   child: ContactUs(),
                 )
             )

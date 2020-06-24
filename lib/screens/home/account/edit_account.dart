@@ -37,12 +37,7 @@ class _SettingsFormState extends State<SettingsForm> {
 
           UserData userData = snapshot.data;
           return  Scaffold(
-            backgroundColor: Colors.brown[100],
-            appBar: AppBar(
-              backgroundColor: Colors.brown[400],
-              elevation: 0.0,
-              title: Text('Edit Account'),
-            ),
+            backgroundColor: backgroundColor,
             body: Container(
               padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
               child: Form(
@@ -133,10 +128,10 @@ class _SettingsFormState extends State<SettingsForm> {
                             ),
                             SizedBox(width: 20.0,),
                             RaisedButton(
-                              color: Colors.pink[400],
+                              color: buttonColor,
                               child: Text(
                                 'Verify',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.black),
                               ),
                               onPressed: () async {
                                 if(_formKey.currentState.validate()) {
@@ -151,10 +146,10 @@ class _SettingsFormState extends State<SettingsForm> {
                     ),
                     SizedBox(height: 20.0),
                     RaisedButton(
-                        color: Colors.pink[400],
+                        color: buttonColor,
                         child: Text(
                           'Edit Data',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.black),
                         ),
                         onPressed: () async {
                           if(_formKey.currentState.validate()){

@@ -15,7 +15,7 @@ class OrderedItemTile extends StatelessWidget {
         child: ListTile(
           leading: CircleAvatar(
             radius: 20.0,
-            backgroundColor: Colors.brown[200],
+            backgroundColor: Colors.grey,
             //backgroundImage: AssetImage('assets/coffee_icon.png'),
           ),
           title: Text(item.name),

@@ -38,7 +38,7 @@ class _OrderTileState extends State<OrderTile> {
             child: ListTile(
               leading: CircleAvatar(
                 radius: 25.0,
-                backgroundColor: Colors.brown[200],
+                backgroundColor: Colors.grey,
                 //backgroundImage: AssetImage('assets/coffee_icon.png'),
               ),
               title: Text(vendorData.name),

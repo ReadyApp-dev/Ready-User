@@ -22,11 +22,11 @@ class _WriteReviewState extends State<WriteReview> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Order Details'),
-        backgroundColor: Colors.brown[400],
+        backgroundColor: appBarColor,
         elevation: 0.0,
       ),
       body: Container(
-        color: Colors.brown[100],
+        color: backgroundColor,
         child: ListView(
           children: <Widget>[
             SizedBox(height: 40.0),
@@ -39,7 +39,7 @@ class _WriteReviewState extends State<WriteReview> {
               itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
               itemBuilder: (context, _) => Icon(
                 Icons.star,
-                color: Colors.pink[400],
+                color: buttonColor,
               ),
               onRatingUpdate: (rating) {
                 print(rating);
@@ -62,10 +62,10 @@ class _WriteReviewState extends State<WriteReview> {
             ),
 
             RaisedButton(
-              color: Colors.pink[400],
+              color: buttonColor,
               child: Text(
                 "Submit Review",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black),
               ),
               onPressed: () async {
                 final snackBar = SnackBar(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:readyuser/services/auth.dart';
+import 'package:readyuser/shared/check_box.dart';
 import 'package:readyuser/shared/constants.dart';
 import 'package:readyuser/shared/loading.dart';
 
@@ -26,6 +27,7 @@ class _RegisterState extends State<Register> {
   String addr1 = '';
   String addr2 = '';
   String phoneNo = '';
+  bool _isSelected=false;
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +131,17 @@ class _RegisterState extends State<Register> {
                 },
               ),
               SizedBox(height: 20.0),
+              LabeledCheckbox(
+                label: 'This is the label text',
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                value: _isSelected,
+                onChanged: (bool newValue) {
+                  setState(() {
+                    _isSelected = newValue;
+                  });
+                },
+              ),
+              SizedBox(height: 20.0,),
               RaisedButton(
                   color: Colors.pink[400],
                   child: Text(
