@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:readyuser/models/item.dart';
 import 'package:readyuser/models/order.dart';
-import 'package:readyuser/screens/home/home.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
-import 'package:upi_india/upi_india.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:readyuser/models/item.dart';
 import 'package:readyuser/models/user.dart';
 import 'package:readyuser/screens/home/cartAndMenu/item_tile.dart';
 import 'package:readyuser/screens/payment/upi_pay.dart';
-import 'package:readyuser/services/database.dart';
-import 'package:readyuser/shared/constants.dart';
 import 'package:readyuser/shared/loading.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 
@@ -40,6 +34,7 @@ class _checkoutpageState extends State<checkoutpage> {
           myCart.forEach((element) {suma += element.cost*element.quantity;});
           userCartVal = suma;
           print(suma);
+          userCartVal = double.parse((userCartVal).toStringAsFixed(2));
 
           return Scaffold(
             backgroundColor: backgroundColor,
@@ -104,7 +99,7 @@ class _checkoutpageState extends State<checkoutpage> {
                         RaisedButton(
                           color: buttonColor,
                           child: Text(
-                            "Pay on Delivery",
+                            "Pay on Takeaway",
                             style: TextStyle(color: Colors.black),
                           ),
                           onPressed: () async {
@@ -127,7 +122,8 @@ class _checkoutpageState extends State<checkoutpage> {
                             DatabaseService(uid: userUid).addOrderData(order);
                             DatabaseService(uid: userUid).addOrderDataVendor(order);
                             showDialog(
-                            context:context,
+                              context:context,
+                              barrierDismissible: false,
                             child:  new AlertDialog(
                                 title: new Text('Success!'),
                                 content: new Text('Order placed successfully'),

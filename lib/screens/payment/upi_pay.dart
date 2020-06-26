@@ -31,9 +31,9 @@ class _PaymentPageState extends State<PaymentPage> {
       app: app,
       receiverUpiId: '9455851989@ybl',
       receiverName: 'Shashwat Pandey',
-      transactionRefId: 'TestingUpiIndiaPlugin',
-      transactionNote: 'Not actual. Just an example.',
-      amount: 5.00,
+      transactionRefId: '$userUid$userCartVendor$userCartVal',
+      transactionNote: 'Pay to Ready App',
+      amount: userCartVal,
     );
   }
 

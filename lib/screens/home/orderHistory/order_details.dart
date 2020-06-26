@@ -78,7 +78,7 @@ class OrderDetails extends StatelessWidget {
               child: Row(
                 children: <Widget>[
                   Text(
-                    "Total Order Value:\n ${userCartVal}",
+                    "Total Order Value:\n ${order.totalCost}",
                     style: TextStyle(
                       color: buttonColor,
                       fontWeight: FontWeight.bold,
