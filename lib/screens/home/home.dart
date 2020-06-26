@@ -37,6 +37,7 @@ class _HomeState extends State<Home> {
     void _showSettingsPanel() {
       showModalBottomSheet(context: context, builder: (context) {
         return Container(
+          color: Colors.black87,
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 5.0),
           child: CartWidget(),
         );

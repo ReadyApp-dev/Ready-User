@@ -62,9 +62,9 @@ class _CartWidgetState extends State<CartWidget> {
                   Expanded(child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
-                        "Total Cart Value:\n ${userCartVal}",
+                        "Total Cart Value:\n ₹${userCartVal}",
                         style: TextStyle(
-                            color: Colors.pink[400],
+                            color: appBarColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
                         ),
@@ -73,10 +73,10 @@ class _CartWidgetState extends State<CartWidget> {
                   )),
                   Expanded(
                     child: RaisedButton(
-                      color: Colors.pink[400],
+                      color: buttonColor,
                       child: Text(
                         "Pay and Checkout",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black),
                       ),
                       onPressed: () async {
                         print("yess");

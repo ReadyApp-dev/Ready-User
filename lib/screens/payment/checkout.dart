@@ -42,11 +42,18 @@ class _checkoutpageState extends State<checkoutpage> {
           print(suma);
 
           return Scaffold(
-            backgroundColor: Colors.brown[100],
+            backgroundColor: backgroundColor,
               appBar: AppBar(
-                backgroundColor: Colors.brown[400],
+                backgroundColor: appBarColor,
                 elevation: 0.0,
-                title: Text('Checkout Page')
+                iconTheme: new IconThemeData(
+                 color: Colors.black
+                ),
+                title: Text('Checkout Page',
+                  style: new TextStyle(
+                    color: Colors.black
+                  ),
+                )
               ),
             body:Column(
             children: <Widget>[
@@ -73,7 +80,7 @@ class _checkoutpageState extends State<checkoutpage> {
                     child: Text(
                       "Total Cart Value:\n ${userCartVal}",
                       style: TextStyle(
-                        color: Colors.pink[400],
+                        color: appBarColor,
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                       ),
@@ -84,10 +91,10 @@ class _checkoutpageState extends State<checkoutpage> {
                     child: Column(
                       children: <Widget>[
                         RaisedButton(
-                          color: Colors.pink[400],
+                          color: buttonColor,
                           child: Text(
                             "Pay Using UPI",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.black),
                           ),
                           onPressed: () async {
                             Navigator.pop(context);
@@ -95,10 +102,10 @@ class _checkoutpageState extends State<checkoutpage> {
                           },
                         ),
                         RaisedButton(
-                          color: Colors.pink[400],
+                          color: buttonColor,
                           child: Text(
                             "Pay on Delivery",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.black),
                           ),
                           onPressed: () async {
                             Map<String, dynamic> myMap = new Map();

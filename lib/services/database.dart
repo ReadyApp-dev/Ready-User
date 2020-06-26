@@ -178,6 +178,7 @@ class DatabaseService {
         totalCost: doc.data['totalCost'] ?? '0.0',
         user: doc.data['user'] ?? '0',
         vendor: doc.data['vendor'] ?? '0',
+        paymentMethod: doc.data['paymentMethod'] ?? '',
       );
     }).toList();
   }

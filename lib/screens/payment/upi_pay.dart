@@ -63,7 +63,13 @@ class _PaymentPageState extends State<PaymentPage> {
                       height: 60,
                       width: 60,
                     ),
-                    Text(app.name),
+                    Text(
+                      app.name,
+                      textAlign: TextAlign.center,
+                      style: new TextStyle(
+                        color: Colors.white
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -85,15 +91,23 @@ class _PaymentPageState extends State<PaymentPage> {
     //DatabaseService(uid: userUid).clearCart();
 
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.brown[400],
+        backgroundColor: appBarColor,
         elevation: 0.0,
         automaticallyImplyLeading: false,
-        title: Text('Payment'),
+        title: Text(
+            'Payment',
+          style: new TextStyle(
+            color: Colors.black
+          ),
+        ),
       ),
       body: Column(
         children: <Widget>[
-          displayUpiApps(),
+          displayUpiApps(
+
+          ),
           Expanded(
             flex: 2,
             child: FutureBuilder(

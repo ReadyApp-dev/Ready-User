@@ -30,21 +30,23 @@ class _WriteReviewState extends State<WriteReview> {
         child: ListView(
           children: <Widget>[
             SizedBox(height: 40.0),
-            RatingBar(
-              initialRating: 0,
-              minRating: 1,
-              direction: Axis.horizontal,
-              allowHalfRating: true,
-              itemCount: 5,
-              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-              itemBuilder: (context, _) => Icon(
-                Icons.star,
-                color: buttonColor,
+            Center(
+              child: RatingBar(
+                initialRating: 0,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, _) => Icon(
+                  Icons.star,
+                  color: buttonColor,
+                ),
+                onRatingUpdate: (rating) {
+                  print(rating);
+                  star = rating;
+                },
               ),
-              onRatingUpdate: (rating) {
-                print(rating);
-                star = rating;
-              },
             ),
 
             SizedBox(height: 30.0),
@@ -61,19 +63,22 @@ class _WriteReviewState extends State<WriteReview> {
               ),
             ),
 
-            RaisedButton(
-              color: buttonColor,
-              child: Text(
-                "Submit Review",
-                style: TextStyle(color: Colors.black),
+            Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: RaisedButton(
+                color: buttonColor,
+                child: Text(
+                  "Submit Review",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: () async {
+                  final snackBar = SnackBar(
+                    content: Text('Review Submitted!'),
+                  );
+                  DatabaseService(uid: userUid).updateReview(widget.order, star, review);
+                  _scaffoldKey.currentState.showSnackBar(snackBar);
+                },
               ),
-              onPressed: () async {
-                final snackBar = SnackBar(
-                  content: Text('Review Submitted!'),
-                );
-                DatabaseService(uid: userUid).updateReview(widget.order, star, review);
-                _scaffoldKey.currentState.showSnackBar(snackBar);
-              },
             ),
             SizedBox(height: 20.0),
           ],

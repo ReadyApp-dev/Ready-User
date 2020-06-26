@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LabeledCheckbox extends StatelessWidget {
   const LabeledCheckbox({
@@ -15,23 +17,43 @@ class LabeledCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        onChanged(!value);
-      },
-      child: Padding(
-        padding: padding,
-        child: Row(
-          children: <Widget>[
-            Checkbox(
+    return Padding(
+      padding: padding,
+      child: Row(
+        children: <Widget>[
+          Theme(
+            data: new ThemeData(unselectedWidgetColor: Colors.white),
+            child: Checkbox(
               value: value,
+              checkColor: Colors.black,
+              focusColor: Colors.blue,
+              activeColor: Colors.white,
+              hoverColor: Colors.white,
               onChanged: (bool newValue) {
                 onChanged(newValue);
               },
             ),
-            Expanded(child: Text(label)),
-          ],
+          ),
+          SizedBox(width: 10,),
+          //Expanded(child: Text(label)),
+          RichText(
+          text:new TextSpan(
+            children: [
+              new TextSpan(
+                text: 'Agree to T&C \n \n',
+                style: new TextStyle(color: Colors.white),
+              ),
+              new TextSpan(
+                text: '(View Terms & Conditions)',
+                style: new TextStyle(color: Colors.blue),
+                recognizer: new TapGestureRecognizer()
+                  ..onTap = () { launch('https://drive.google.com/file/d/1pMnwkTk02F0B-gOeDROMWxq4ZTpms_cp/view?usp=sharing');
+                  },
+              ),
+            ],
+          ),
         ),
+        ],
       ),
     );
   }
