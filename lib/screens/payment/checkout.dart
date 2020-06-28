@@ -124,23 +124,26 @@ class _checkoutpageState extends State<checkoutpage> {
                             showDialog(
                               context:context,
                               barrierDismissible: false,
-                            child:  new AlertDialog(
-                                title: new Text('Success!'),
-                                content: new Text('Order placed successfully'),
-                                actions: <Widget>[
-                                  new FlatButton(
-                                    child: Text("Have a nice day after you press me"),
-                                    onPressed: () async{
-                                      Navigator.of(context).pop();
-                                      Navigator.of(context).pop();
-                                      await DatabaseService(uid: userUid).clearCart();
-                                      print('works');
-                                      userCartVal = 0.0;
-                                      userCartVendor = '';
-                                    },
-                                  )
-                                ],
-                              ),
+                            child:  WillPopScope(
+                              onWillPop: (){},
+                              child: new AlertDialog(
+                                  title: new Text('Success!'),
+                                  content: new Text('Order placed successfully Pick it in 30 minutes!'),
+                                  actions: <Widget>[
+                                    new FlatButton(
+                                      child: Text("Have a nice day after you press me"),
+                                      onPressed: () async{
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
+                                        await DatabaseService(uid: userUid).clearCart();
+                                        print('works');
+                                        userCartVal = 0.0;
+                                        userCartVendor = '';
+                                      },
+                                    )
+                                  ],
+                                ),
+                            ),
                             );
                           },
                         ),

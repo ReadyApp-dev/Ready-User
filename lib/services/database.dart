@@ -50,8 +50,8 @@ class DatabaseService {
   }
 
   Future<void> getUserDetails() async{
+    loadCart();
     return await userCollection.document(uid).get().then((value) {
-
       userUid = uid;
       userName = value.data['name'];
       userEmail = value.data['email'];
@@ -60,7 +60,6 @@ class DatabaseService {
       userPhoneNo = value.data['phone'];
       userCartVendor = value.data['cartVendor'];
       userCartVal = value.data['cartVal'];
-
     });
   }
   
@@ -181,6 +180,19 @@ class DatabaseService {
         paymentMethod: doc.data['paymentMethod'] ?? '',
       );
     }).toList();
+  }
+
+  Future<List<Item>> loadCart() async{
+    await userCollection.document(uid).collection('cart').getDocuments().then((snapshot) {
+      myCart = snapshot.documents.map((doc){
+        return Item(
+          name: doc.data['name'] ?? '',
+          id: doc.documentID,
+          cost: doc.data['cost'] ?? 0.0,
+          quantity: doc.data['quantity'] ?? 0,
+        );
+      }).toList();
+    });
   }
 
   Future<void> clearCart() async{

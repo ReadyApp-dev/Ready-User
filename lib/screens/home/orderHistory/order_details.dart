@@ -100,6 +100,25 @@ class OrderDetails extends StatelessWidget {
               ),
             ),
             SizedBox(height:10.0),
+            Card(
+              color: Colors.white,
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+              child: ListTile(
+                onTap: () => launch("tel://${vendor.phoneNo}"),
+                leading: Text(
+                    "Vendor\nContact",
+                  textAlign: TextAlign.center,
+                  style: new TextStyle(
+
+                  ),
+                ),
+                title: Text(
+                  vendor.phoneNo,
+                  style: TextStyle(fontSize: 15.0, fontFamily: 'Neucha'),
+                ),
+              ),
+            ),
+            SizedBox(height:10.0),
             RaisedButton(
               color: buttonColor,
               child: Text(
