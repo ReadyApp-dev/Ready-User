@@ -222,6 +222,7 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 print("yes it works");
                                 widget.showVendors = false;
+                                searchresult='';
                                 search=false;
                               });
                             },

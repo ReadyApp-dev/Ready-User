@@ -9,7 +9,7 @@ import 'package:flutter_counter/flutter_counter.dart';
 class ItemTile extends StatefulWidget {
   final Item item;
   Function removeItem;
-  ItemTile({ this.item , this.removeItem });
+  ItemTile({this.item , this.removeItem });
   @override
   _ItemTileState createState() => _ItemTileState();
 }

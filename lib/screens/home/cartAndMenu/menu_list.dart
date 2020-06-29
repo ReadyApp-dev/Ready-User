@@ -32,6 +32,7 @@ class _MenuListState extends State<MenuList> {
         return ListView.builder(
           itemCount: items.length,
           itemBuilder: (context, index) {
+            int test=-1;
             // ignore: missing_return
             if(items[index].name.toLowerCase().contains(widget.searchresult.toLowerCase())) {
               int ind = -1;
@@ -47,10 +48,13 @@ class _MenuListState extends State<MenuList> {
                 item: items[index],
               );
             }
-            // ignore: missing_return
             else {
               return Center(
-                child: Text('No match Found'),
+                child: Text('No match Found',
+                style: TextStyle(
+                    color: Colors.red, fontSize: 30,
+                ),
+                ),
               );
             }
           },
