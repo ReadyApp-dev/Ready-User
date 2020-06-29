@@ -7,15 +7,18 @@ import 'package:readyuser/screens/home/vendors/vendor_tile.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
 import 'package:readyuser/shared/loading.dart';
+import 'package:readyuser/screens/home/home.dart';
 
 class MenuList extends StatefulWidget {
-
-
   @override
   _MenuListState createState() => _MenuListState();
+  final String searchresult;
+  final bool search;
+  MenuList(this.searchresult,this.search);
 }
 
 class _MenuListState extends State<MenuList> {
+
   @override
   Widget build(BuildContext context) {
     final items = Provider.of<List<Item>>(context) ?? [];
@@ -29,18 +32,27 @@ class _MenuListState extends State<MenuList> {
         return ListView.builder(
           itemCount: items.length,
           itemBuilder: (context, index) {
-            int ind = -1;
-            if(data != null){
-              ind = data.indexWhere((element) => element.id == items[index].id);
+            // ignore: missing_return
+            if(items[index].name.toLowerCase().contains(widget.searchresult.toLowerCase())) {
+              int ind = -1;
+              if (data != null) {
+                ind =
+                    data.indexWhere((element) => element.id == items[index].id);
+              }
+              if (ind != -1)
+                items[index].quantity = data[ind].quantity;
+              print(items[index].quantity);
+
+              return ItemTile(
+                item: items[index],
+              );
             }
-            if(ind != -1)
-              items[index].quantity = data[ind].quantity;
-            print(items[index].quantity);
-
-            return ItemTile(
-              item: items[index],
-
-            );
+            // ignore: missing_return
+            else {
+              return Center(
+                child: Text('No match Found'),
+              );
+            }
           },
         );
       }

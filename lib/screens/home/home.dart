@@ -29,6 +29,8 @@ class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  String searchresult = '';
+  bool search =false;
 
   _register() {
     _firebaseMessaging.getToken().then((token) {
@@ -58,8 +60,6 @@ class _HomeState extends State<Home> {
       //setState(() => _message = message["notification"]["title"]);
     });
   }
-
-
   @override
   Widget build(BuildContext context) {
 
@@ -125,7 +125,8 @@ class _HomeState extends State<Home> {
                 }),
               ),
                 backgroundColor: Colors.brown[50],
-                appBar: AppBar(
+                appBar: widget.showVendors ?
+                AppBar(
                   title: Text('Ready',
                     style: new TextStyle(
                       color: Colors.black,
@@ -139,6 +140,51 @@ class _HomeState extends State<Home> {
                       label: Text('logout'),
                       onPressed: () async {
                         await _auth.signOut();
+                      },
+                    ),
+                    FlatButton.icon(
+                      icon: Icon(Icons.shopping_cart),
+                      label: Text('cart'),
+                      onPressed: () => _showSettingsPanel(),
+                    )
+                  ],
+                ):
+                AppBar(
+                  title: search ? TextField(
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.search, color: Colors.black),
+                        hintText: "Search...",
+                        hintStyle: TextStyle(color: Colors.black)),
+                    onChanged: (val) {
+                      setState(() {
+                        searchresult = val;
+                      });
+                    },
+                  )
+                      :Text('Ready',
+                    style: new TextStyle(
+                      color: Colors.black,
+                    ),),
+                  iconTheme: new IconThemeData(color: Colors.black),
+                  backgroundColor: appBarColor,
+                  elevation: 0.0,
+                  actions: <Widget>[
+                    search ? IconButton(icon: Icon(Icons.close), onPressed: (){
+                      setState(() {
+                        search = !search;
+                        searchresult = '';
+                      });
+                    }) :
+                    FlatButton.icon(
+                      icon: Icon(Icons.search),
+                      label: Text('Search'),
+                      onPressed: ()  {
+                        setState(() {
+                          search = !search;
+                        });
                       },
                     ),
                     FlatButton.icon(
@@ -176,6 +222,7 @@ class _HomeState extends State<Home> {
                               setState(() {
                                 print("yes it works");
                                 widget.showVendors = false;
+                                search=false;
                               });
                             },
                           );},
@@ -184,7 +231,7 @@ class _HomeState extends State<Home> {
                     ),
                   ):StreamProvider<List<Item>>.value(
                     value: DatabaseService().items,
-                    child:MenuList(),
+                    child:MenuList('$searchresult', search),
                   ),
                 )
             )
