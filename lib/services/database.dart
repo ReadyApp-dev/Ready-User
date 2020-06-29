@@ -49,7 +49,7 @@ class DatabaseService {
     }).toList();
   }
 
-  Future<void> getUserDetails() async{
+  Future<bool> getUserDetails() async{
     loadCart();
     return await userCollection.document(uid).get().then((value) {
       userUid = uid;
@@ -60,6 +60,7 @@ class DatabaseService {
       userPhoneNo = value.data['phone'];
       userCartVendor = value.data['cartVendor'];
       userCartVal = value.data['cartVal'];
+      return true;
     });
   }
   
@@ -101,8 +102,17 @@ class DatabaseService {
       'phone': userData.phoneNo,
       'cartVendor': userData.cartVendor,
       'cartVal': userData.cartVal,
+      'token': userToken,
     });
   }
+
+  Future<void> updateTokenData(String token) async {
+    var ref = userCollection.document(uid);
+    print(ref.path);
+    return await ref.updateData({'token': token}).then((value) => print("token sent"));
+  }
+
+
   // brew list from snapshot
   List<Item> _itemListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc){

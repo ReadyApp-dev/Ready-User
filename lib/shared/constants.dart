@@ -10,6 +10,7 @@ String userAddr2 = '';
 String userPhoneNo = '';
 String userCartVendor = '';
 double userCartVal = 0.0;
+String userToken = '';
 FirebaseUser firebaseUser;
 double userLatitude = 0.0;
 double userLongitude = 0.0;

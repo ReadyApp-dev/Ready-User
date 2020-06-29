@@ -24,7 +24,7 @@ class DrawerList extends StatelessWidget {
               ),
             ),
             Container(
-              child: Text('$name',
+              child: Text('$userName',
                 style: TextStyle(fontWeight: FontWeight.bold, fontStyle: FontStyle.italic,
                   color: backgroundColor,
                     fontSize: 25,

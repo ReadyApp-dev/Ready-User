@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
@@ -27,12 +28,43 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
 
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  _register() {
+    _firebaseMessaging.getToken().then((token) {
+      print(token+"end");
+      userToken = token;
+      DatabaseService(uid: userUid).updateTokenData(userToken);
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getMessage();
+  }
+
+  void getMessage(){
+    _firebaseMessaging.configure(
+        onMessage: (Map<String, dynamic> message) async {
+          print('on message $message');
+          //setState(() => _message = message["notification"]["title"]);
+        }, onResume: (Map<String, dynamic> message) async {
+      print('on resume $message');
+      //setState(() => _message = message["notification"]["title"]);
+    }, onLaunch: (Map<String, dynamic> message) async {
+      print('on launch $message');
+      //setState(() => _message = message["notification"]["title"]);
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
     User user = Provider.of<User>(context);
     userUid = user.uid;
-    DatabaseService(uid: userUid).getUserDetails();
 
     void _showSettingsPanel() {
       showModalBottomSheet(context: context, builder: (context) {
@@ -120,24 +152,35 @@ class _HomeState extends State<Home> {
                   color: backgroundColor,
                   child: widget.showVendors? StreamProvider<List<Vendor>>.value(
                     value: DatabaseService().vendors,
-                    child:FutureBuilder(
-                      future: Geolocator().getCurrentPosition(
-                          desiredAccuracy: LocationAccuracy.best),
-                      builder: (BuildContext context, AsyncSnapshot<Position> snapshot){
+                    child:FutureBuilder<bool>(
+                      future: DatabaseService(uid: userUid).getUserDetails(),
+                      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                        print("1");
                         if(snapshot.data == null) return Loading();
-                        Position pos = snapshot.data;
-                        userLatitude = pos.latitude;
-                        userLongitude = pos.longitude;
-                        print(userLatitude+userLongitude);
-                        currentVendor = '';
-                        return VendorList(
-                        selectVendor: (){
-                          setState(() {
-                            print("yes it works");
-                            widget.showVendors = false;
-                          });
-                        },
-                      );},
+                        print(snapshot.data);
+                        print("works here");
+                        _register();
+                        print('yes');
+                        return FutureBuilder(
+                          future: Geolocator().getCurrentPosition(
+                              desiredAccuracy: LocationAccuracy.best),
+                          builder: (BuildContext context, AsyncSnapshot<Position> snapshot){
+                            if(snapshot.data == null) return Loading();
+                            Position pos = snapshot.data;
+                            userLatitude = pos.latitude;
+                            userLongitude = pos.longitude;
+                            print(userLatitude+userLongitude);
+                            currentVendor = '';
+                            return VendorList(
+                            selectVendor: (){
+                              setState(() {
+                                print("yes it works");
+                                widget.showVendors = false;
+                              });
+                            },
+                          );},
+                        );
+                      }
                     ),
                   ):StreamProvider<List<Item>>.value(
                     value: DatabaseService().items,
