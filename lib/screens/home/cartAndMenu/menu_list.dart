@@ -32,13 +32,11 @@ class _MenuListState extends State<MenuList> {
         return ListView.builder(
           itemCount: items.length,
           itemBuilder: (context, index) {
-            int test=-1;
             // ignore: missing_return
             if(items[index].name.toLowerCase().contains(widget.searchresult.toLowerCase())) {
               int ind = -1;
               if (data != null) {
-                ind =
-                    data.indexWhere((element) => element.id == items[index].id);
+                ind = data.indexWhere((element) => element.id == items[index].id);
               }
               if (ind != -1)
                 items[index].quantity = data[ind].quantity;
@@ -46,15 +44,6 @@ class _MenuListState extends State<MenuList> {
 
               return ItemTile(
                 item: items[index],
-              );
-            }
-            else {
-              return Center(
-                child: Text('No match Found',
-                style: TextStyle(
-                    color: Colors.red, fontSize: 30,
-                ),
-                ),
               );
             }
           },

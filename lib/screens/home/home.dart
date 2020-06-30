@@ -154,6 +154,7 @@ class _HomeState extends State<Home> {
                     style: TextStyle(
                       color: Colors.black,
                     ),
+                    autofocus: true,
                     decoration: InputDecoration(
                         prefixIcon: Icon(Icons.search, color: Colors.black),
                         hintText: "Search...",
