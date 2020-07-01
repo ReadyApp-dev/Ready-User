@@ -29,8 +29,8 @@ class _PaymentPageState extends State<PaymentPage> {
   Future<UpiResponse> initiateTransaction(String app) async {
     return _upiIndia.startTransaction(
       app: app,
-      receiverUpiId: '9455851989@ybl',
-      receiverName: 'Shashwat Pandey',
+      receiverUpiId: 'taori.vilas.18@okaxis',
+      receiverName: 'Vilas Tawri',
       transactionRefId: '$userUid$userCartVendor$userCartVal',
       transactionNote: 'Pay to Ready App',
       amount: userCartVal,

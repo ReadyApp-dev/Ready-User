@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readyuser/models/item.dart';
-import 'package:readyuser/models/vendor.dart';
 import 'package:readyuser/screens/home/cartAndMenu/item_tile.dart';
-import 'package:readyuser/screens/home/vendors/vendor_tile.dart';
 import 'package:readyuser/services/database.dart';
 import 'package:readyuser/shared/constants.dart';
 import 'package:readyuser/shared/loading.dart';
-import 'package:readyuser/screens/home/home.dart';
 
 class MenuList extends StatefulWidget {
   @override
@@ -45,6 +42,8 @@ class _MenuListState extends State<MenuList> {
               return ItemTile(
                 item: items[index],
               );
+            }else{
+              return Container(height: 0,width: 0,);
             }
           },
         );
