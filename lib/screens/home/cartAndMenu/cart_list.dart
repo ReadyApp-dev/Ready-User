@@ -80,14 +80,10 @@ class _CartWidgetState extends State<CartWidget> {
                         style: TextStyle(color: Colors.black),
                       ),
                       onPressed: () async {
-                        print("yess");
-                        //Navigator.pop(context);
                         if(!myCart.isEmpty)
                         {
                           Navigator.push(context,MaterialPageRoute(builder: (context)=>checkoutpage()));
                         }
-                        //Navigator.pop(context);
-                        print("noo");
                       },
                     ),
                   ),

@@ -106,7 +106,6 @@ class _ItemTileState extends State<ItemTile> {
                     element.id == widget.item.id);
                     myCart.removeAt(index);
                   }
-                  print(myCart);
                   if(myCart.isEmpty){
                     userCartVendor = '';
                     userCartVal = 0.0;

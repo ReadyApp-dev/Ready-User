@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:readyuser/models/user.dart';
-import 'package:readyuser/screens/payment/upi_pay.dart';
 import 'package:readyuser/screens/wrapper.dart';
 import 'package:readyuser/services/auth.dart';
 

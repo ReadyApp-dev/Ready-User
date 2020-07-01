@@ -25,19 +25,19 @@ class _MenuListState extends State<MenuList> {
       builder: (context, snapshot) {
         List<Item> data = snapshot.data;
         if(data == null) return Loading();
-        print(data);
         return ListView.builder(
           itemCount: items.length,
           itemBuilder: (context, index) {
-            // ignore: missing_return
             if(items[index].name.toLowerCase().contains(widget.searchresult.toLowerCase())) {
               int ind = -1;
               if (data != null) {
                 ind = data.indexWhere((element) => element.id == items[index].id);
               }
+              if(data.length == 0){
+                items[index].quantity = 0;
+              }
               if (ind != -1)
                 items[index].quantity = data[ind].quantity;
-              print(items[index].quantity);
 
               return ItemTile(
                 item: items[index],

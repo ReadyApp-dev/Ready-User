@@ -34,7 +34,6 @@ class _HomeState extends State<Home> {
 
   _register() {
     _firebaseMessaging.getToken().then((token) {
-      print(token+"end");
       userToken = token;
       DatabaseService(uid: userUid).updateTokenData(userToken);
     });
@@ -50,13 +49,10 @@ class _HomeState extends State<Home> {
   void getMessage(){
     _firebaseMessaging.configure(
         onMessage: (Map<String, dynamic> message) async {
-          print('on message $message');
           //setState(() => _message = message["notification"]["title"]);
         }, onResume: (Map<String, dynamic> message) async {
-      print('on resume $message');
       //setState(() => _message = message["notification"]["title"]);
     }, onLaunch: (Map<String, dynamic> message) async {
-      print('on launch $message');
       //setState(() => _message = message["notification"]["title"]);
     });
   }
@@ -116,7 +112,6 @@ class _HomeState extends State<Home> {
             child:  Scaffold(
               drawer: Drawer(
                 child: DrawerList((int i){
-                  print(i);
                   setState(() {
                     widget.drawerItemSelected = i;
                     widget.showVendors = true;
@@ -202,12 +197,8 @@ class _HomeState extends State<Home> {
                     child:FutureBuilder<bool>(
                       future: DatabaseService(uid: userUid).getUserDetails(),
                       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                        print("1");
                         if(snapshot.data == null) return Loading();
-                        print(snapshot.data);
-                        print("works here");
                         _register();
-                        print('yes');
                         return FutureBuilder(
                           future: Geolocator().getCurrentPosition(
                               desiredAccuracy: LocationAccuracy.best),
@@ -216,12 +207,10 @@ class _HomeState extends State<Home> {
                             Position pos = snapshot.data;
                             userLatitude = pos.latitude;
                             userLongitude = pos.longitude;
-                            print(userLatitude+userLongitude);
                             currentVendor = '';
                             return VendorList(
                             selectVendor: (){
                               setState(() {
-                                print("yes it works");
                                 widget.showVendors = false;
                                 searchresult='';
                                 search=false;
@@ -246,7 +235,6 @@ class _HomeState extends State<Home> {
             child:  Scaffold(
                 drawer: Drawer(
                   child: DrawerList((int i){
-                    print(i);
                     setState(() {
                       widget.drawerItemSelected = i;
                       Navigator.of(context).pop();
@@ -291,7 +279,6 @@ class _HomeState extends State<Home> {
             child:  Scaffold(
                 drawer: Drawer(
                   child: DrawerList((int i){
-                    print(i);
                     setState(() {
                       widget.drawerItemSelected = i;
                       Navigator.of(context).pop();
@@ -336,7 +323,6 @@ class _HomeState extends State<Home> {
             child:  Scaffold(
                 drawer: Drawer(
                   child: DrawerList((int i){
-                    print(i);
                     setState(() {
                       widget.drawerItemSelected = i;
                       Navigator.of(context).pop();
