@@ -168,9 +168,9 @@ class _RegisterState extends State<Register> {
                         Scaffold.of(context).showSnackBar(SnackBar(
                           backgroundColor: appBarColor,
                           content: Text("Agree to Terms & Conditions to continue",
-                          style: new TextStyle(
-                            color: Colors.black,
-                          ),),
+                            style: new TextStyle(
+                              color: Colors.black,
+                            ),),
                         ));
                       }
                     }

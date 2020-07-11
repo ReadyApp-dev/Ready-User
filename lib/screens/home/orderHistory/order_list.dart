@@ -1,12 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:readyuser/models/item.dart';
 import 'package:readyuser/models/order.dart';
 import 'package:readyuser/models/user.dart';
-import 'package:readyuser/screens/home/cartAndMenu/item_tile.dart';
 import 'package:readyuser/screens/home/orderHistory/order_tile.dart';
-import 'package:readyuser/screens/payment/upi_pay.dart';
 import 'package:readyuser/services/database.dart';
-import 'package:readyuser/shared/constants.dart';
 import 'package:readyuser/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
